@@ -66,7 +66,8 @@ CREATE TABLE `student` (
   `number` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `program_id` int(11) NOT NULL,
-  `image` varbinary(1000) DEFAULT NULL
+  `image` varbinary(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -121,6 +122,12 @@ ALTER TABLE `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `program_student_id` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
+
+--
+-- Add status column for soft delete (if not already present)
+-- Uncomment and run this if adding to an existing database:
+-- ALTER TABLE `student` ADD COLUMN `status` varchar(20) DEFAULT 'active';
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

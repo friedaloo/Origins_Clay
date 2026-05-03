@@ -40,6 +40,7 @@ public class LoginController extends HttpServlet {
 
         Boolean status = loginService.loginUser(student);
 
+        // status = true (success), false (invalid credentials), null (error)
         if (Boolean.TRUE.equals(status)) {
 
             // SESSION
@@ -54,8 +55,13 @@ public class LoginController extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/home");
             }
 
+        } else if (Boolean.FALSE.equals(status)) {
+            // Invalid credentials OR account is soft-deleted/inactive
+            req.setAttribute("error", "Invalid username or password. Account may be inactive.");
+            req.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(req, resp);
         } else {
-            req.setAttribute("error", "Invalid username or password");
+            // Null - database error
+            req.setAttribute("error", "System error. Please try again later.");
             req.getRequestDispatcher("/WEB-INF/pages/Login.jsp").forward(req, resp);
         }
     }

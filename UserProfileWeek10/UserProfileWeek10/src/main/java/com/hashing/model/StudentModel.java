@@ -14,6 +14,7 @@ public class StudentModel {
     private int program;
     private String password; // ✅ FIXED
     private String image;
+    private String status; // ✅ Status for soft delete functionality
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -44,4 +45,7 @@ public class StudentModel {
     
     public String getImage() {return image;}
     public void setImage(String imagePath) {this.image = imagePath;}
+    
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

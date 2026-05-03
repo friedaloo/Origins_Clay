@@ -117,6 +117,13 @@
                 <i class="fa fa-user"></i> Profile
             </a>
 
+            <!-- Admin menu only for admin user -->
+            <c:if test="${sessionScope.username == 'admin'}">
+                <a href="${pageContext.request.contextPath}/admin/console" style="background: #8b5cf6;">
+                    <i class="fa fa-cog"></i> Admin Panel
+                </a>
+            </c:if>
+
             <a href="${pageContext.request.contextPath}/logout" class="logout">
                 <i class="fa fa-right-from-bracket"></i> Logout
             </a>
@@ -138,6 +145,17 @@
 
 <!-- CONTENT -->
 <div class="container">
+    <c:if test="${param.accountDeleted == 'true'}">
+        <div style="background-color: #d4edda; border: 2px solid #28a745; color: #155724; padding: 15px 20px; border-radius: 5px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
+            <span style="font-size: 24px;">✅</span>
+            <div>
+                <strong>Account Deletion Successful</strong><br>
+                Your account has been permanently deleted. If you need to restore it, please contact the support team.
+            </div>
+            <span style="margin-left: auto; cursor: pointer; font-size: 20px; font-weight: bold;" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+    </c:if>
+
     <h1>Welcome </h1>
 
     <c:if test="${not empty sessionScope.username}">

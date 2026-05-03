@@ -10,9 +10,17 @@ import com.hashing.utils.PasswordUtil;
 
 public class LoginService {
 
+    /**
+     * Login user with active status check.
+     * Only allows login for active (non-soft-deleted) students.
+     * 
+     * @param studentModel Contains username and password
+     * @return true if credentials match and account is active, false otherwise, null on error
+     */
     public Boolean loginUser(StudentModel studentModel) {
 
-        String query = "SELECT username, password FROM student WHERE username = ?";
+        // Check for active status - soft-deleted accounts cannot login
+        String query = "SELECT username, password, status FROM student WHERE username = ? AND (status = 'active' OR status IS NULL)";
 
         try (Connection conn = DBconfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

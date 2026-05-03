@@ -20,6 +20,7 @@ public class AuthenticationFilter implements Filter {
     private static final String LOGIN = "/login";
     private static final String REGISTER = "/register";
     private static final String HOME = "/home";
+    private static final String ADMIN_PREFIX = "/admin";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
@@ -47,6 +48,25 @@ public class AuthenticationFilter implements Filter {
         Object user = SessionUtil.getAttribute(req, "username");
         boolean isLoggedIn = (user != null);
 
+        // Check admin access for /admin/* paths
+        if (path.startsWith(ADMIN_PREFIX)) {
+            if (!isLoggedIn) {
+                res.sendRedirect(contextPath + LOGIN);
+                return;
+            }
+            
+            String username = (String) user;
+            if (!"admin".equalsIgnoreCase(username)) {
+                // Non-admin user trying to access admin panel
+                res.sendStatus(HttpServletResponse.SC_FORBIDDEN);
+                res.getWriter().print("Access Denied: Admin privileges required");
+                return;
+            }
+            
+            // Admin user - allow access
+            chain.doFilter(request, response);
+            return;
+        }
 
         boolean isPublic = path.equals(LOGIN) || path.equals(REGISTER);
 
