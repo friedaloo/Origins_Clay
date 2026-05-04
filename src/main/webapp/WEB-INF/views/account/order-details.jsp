@@ -5,8 +5,8 @@
     <jsp:param name="pageTitle" value="Order Details" />
 </jsp:include>
 
-<h1 class="page-title"><em>Order</em> <strong>#${order.id}</strong></h1>
-<p class="page-subtitle">Placed on ${order.createdAt}</p>
+<h1 class="page-title"><em>Order</em> <strong>#${order.orderId}</strong></h1>
+<p class="page-subtitle">Placed on ${order.orderDate}</p>
 
 <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
     <!-- Order Items -->
@@ -41,9 +41,12 @@
         <div class="card">
             <h3 style="font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--clay-muted); margin-bottom: 1rem;">Summary</h3>
             <table>
-                <tr><th>Status</th><td><span class="status-badge status-${order.status}">${order.status}</span></td></tr>
+                <tr><th>Status</th><td><span class="status-badge status-${order.orderStatus}">${order.orderStatus}</span></td></tr>
                 <tr><th>Total</th><td style="font-size: 1.2rem; font-weight: 600; color: var(--clay-olive);">$${order.totalAmount}</td></tr>
-                <tr><th>Shipping</th><td>${order.shippingAddress}</td></tr>
+                <tr><th>Ship To</th><td>${order.shippingName}</td></tr>
+                <tr><th>Phone</th><td>${order.shippingPhone}</td></tr>
+                <tr><th>Address</th><td>${order.shippingAddress}</td></tr>
+                <tr><th>City</th><td>${order.shippingCity}</td></tr>
             </table>
         </div>
         <a href="${pageContext.request.contextPath}/account/orders" class="btn btn-secondary" style="width: 100%; text-align: center;">

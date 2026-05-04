@@ -34,9 +34,9 @@
                     <div class="price">$${product.price}</div>
                 </div>
                 <div class="actions">
-                    <a href="${pageContext.request.contextPath}/product-details?id=${product.id}" class="btn btn-secondary btn-sm">View</a>
+                    <a href="${pageContext.request.contextPath}/product-details?id=${product.productId}" class="btn btn-secondary btn-sm">View</a>
                     <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display:inline;">
-                        <input type="hidden" name="productId" value="${product.id}">
+                        <input type="hidden" name="productId" value="${product.productId}">
                         <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
                     </form>
                 </div>

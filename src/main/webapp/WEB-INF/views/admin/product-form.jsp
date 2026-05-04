@@ -20,12 +20,17 @@
 <div class="card" style="max-width: 650px;">
     <form action="${pageContext.request.contextPath}/admin/product/${formAction}" method="post">
         <c:if test="${formAction == 'edit'}">
-            <input type="hidden" name="id" value="${product.id}">
+            <input type="hidden" name="id" value="${product.productId}">
         </c:if>
 
         <div class="field">
             <label for="name">Product Name</label>
             <input type="text" id="name" name="name" value="${product.name}" placeholder="e.g. Terracotta Vase" required>
+        </div>
+
+        <div class="field">
+            <label for="sku">SKU</label>
+            <input type="text" id="sku" name="sku" value="${product.sku}" placeholder="e.g. TC-VASE-001">
         </div>
 
         <div class="field">
@@ -49,7 +54,7 @@
             <select id="categoryId" name="categoryId" required>
                 <option value="">— Select Category —</option>
                 <c:forEach var="cat" items="${categories}">
-                    <option value="${cat.id}" ${product.categoryId == cat.id ? 'selected' : ''}>${cat.name}</option>
+                    <option value="${cat.categoryId}" ${product.categoryId == cat.categoryId ? 'selected' : ''}>${cat.categoryName}</option>
                 </c:forEach>
             </select>
         </div>
@@ -59,12 +64,12 @@
             <input type="text" id="imageUrl" name="imageUrl" value="${product.imageUrl}" placeholder="images/products/item.jpg">
         </div>
 
-        <div style="margin-bottom: 1.2rem;">
-            <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.75rem; color: var(--clay-brown);">
-                <input type="checkbox" name="featured" ${product.featured ? 'checked' : ''}
-                       style="width: 16px; height: 16px;">
-                Mark as Featured Product
-            </label>
+        <div class="field">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="active" ${product.status == 'active' ? 'selected' : ''}>Active</option>
+                <option value="inactive" ${product.status == 'inactive' ? 'selected' : ''}>Inactive</option>
+            </select>
         </div>
 
         <div style="display: flex; gap: 0.8rem;">

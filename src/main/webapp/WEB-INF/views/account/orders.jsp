@@ -28,14 +28,14 @@
                 <tbody>
                     <c:forEach var="order" items="${orders}">
                         <tr>
-                            <td><strong>#${order.id}</strong></td>
-                            <td>${order.createdAt}</td>
+                            <td><strong>#${order.orderId}</strong></td>
+                            <td>${order.orderDate}</td>
                             <td>$${order.totalAmount}</td>
                             <td>
-                                <span class="status-badge status-${order.status}">${order.status}</span>
+                                <span class="status-badge status-${order.orderStatus}">${order.orderStatus}</span>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/account/order-details?id=${order.id}" class="btn btn-secondary btn-sm">View</a>
+                                <a href="${pageContext.request.contextPath}/account/order-details?id=${order.orderId}" class="btn btn-secondary btn-sm">View</a>
                             </td>
                         </tr>
                     </c:forEach>

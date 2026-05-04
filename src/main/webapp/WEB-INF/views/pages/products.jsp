@@ -20,7 +20,7 @@
             <select id="category" name="category">
                 <option value="">All Categories</option>
                 <c:forEach var="cat" items="${categories}">
-                    <option value="${cat.id}" ${selectedCategory == cat.id ? 'selected' : ''}>${cat.name}</option>
+                    <option value="${cat.categoryId}" ${selectedCategory == cat.categoryId ? 'selected' : ''}>${cat.categoryName}</option>
                 </c:forEach>
             </select>
         </div>
@@ -52,15 +52,15 @@
                 </c:choose>
             </div>
             <div class="actions">
-                <a href="${pageContext.request.contextPath}/product-details?id=${product.id}" class="btn btn-secondary btn-sm">Details</a>
+                <a href="${pageContext.request.contextPath}/product-details?id=${product.productId}" class="btn btn-secondary btn-sm">Details</a>
                 <c:if test="${product.stockQuantity > 0}">
                     <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display:inline;">
-                        <input type="hidden" name="productId" value="${product.id}">
+                        <input type="hidden" name="productId" value="${product.productId}">
                         <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
                     </form>
                 </c:if>
                 <form action="${pageContext.request.contextPath}/wishlist/add" method="post" style="display:inline;">
-                    <input type="hidden" name="productId" value="${product.id}">
+                    <input type="hidden" name="productId" value="${product.productId}">
                     <button type="submit" class="btn btn-secondary btn-sm" title="Add to Wishlist"><i class="fa-regular fa-heart"></i></button>
                 </form>
             </div>

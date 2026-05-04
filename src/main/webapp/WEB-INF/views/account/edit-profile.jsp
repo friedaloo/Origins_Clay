@@ -14,6 +14,11 @@
 
 <div class="card" style="max-width: 600px;">
     <form action="${pageContext.request.contextPath}/account/edit-profile" method="post">
+        <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="${user.username}">
+        </div>
+
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
             <div class="field" style="flex: 1; min-width: 200px;">
                 <label for="firstName">First Name</label>

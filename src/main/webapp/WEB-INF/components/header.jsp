@@ -239,6 +239,8 @@
         .status-delivered  { background: #dcfce7; color: #166534; }
         .status-cancelled  { background: #fef2f2; color: #991b1b; }
         .status-returned   { background: #fef2f2; color: #991b1b; }
+        .status-active     { background: #dcfce7; color: #166534; }
+        .status-inactive   { background: #f3f4f6; color: #6b7280; }
 
         .product-card {
             background: #fff;
@@ -278,7 +280,7 @@
                 <c:if test="${sessionScope.userRole == 'admin'}">
                     <li><a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
                 </c:if>
-                <c:if test="${sessionScope.userRole == 'customer'}">
+                <c:if test="${sessionScope.userRole == 'user'}">
                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa-solid fa-bag-shopping"></i> Cart</a></li>
                     <li><a href="${pageContext.request.contextPath}/wishlist"><i class="fa-regular fa-heart"></i></a></li>
                 </c:if>

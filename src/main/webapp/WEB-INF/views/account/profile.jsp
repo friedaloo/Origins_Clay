@@ -30,10 +30,11 @@
             </div>
 
             <table>
-                <tr><th style="width: 140px;">Email</th><td>${user.email}</td></tr>
+                <tr><th style="width: 140px;">Username</th><td>${not empty user.username ? user.username : '—'}</td></tr>
+                <tr><th>Email</th><td>${user.email}</td></tr>
                 <tr><th>Phone</th><td>${not empty user.phone ? user.phone : '—'}</td></tr>
                 <tr><th>Address</th><td>${not empty user.address ? user.address : '—'}</td></tr>
-                <tr><th>Member Since</th><td>${user.createdAt}</td></tr>
+                <tr><th>Status</th><td><span class="status-badge status-${user.status}">${user.status}</span></td></tr>
             </table>
         </div>
     </div>

@@ -32,7 +32,7 @@ public class SessionUtil {
     }
 
     /**
-     * Returns the role of the logged-in user ("admin", "customer"), or null.
+     * Returns the role of the logged-in user ("admin", "user"), or null.
      */
     public static String getUserRole(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

@@ -24,17 +24,18 @@
                         <th>ID</th>
                         <th>Image</th>
                         <th>Name</th>
+                        <th>SKU</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Featured</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="product" items="${products}">
                         <tr>
-                            <td>${product.id}</td>
+                            <td>${product.productId}</td>
                             <td>
                                 <img src="${pageContext.request.contextPath}/${product.imageUrl}"
                                      alt="${product.name}"
@@ -42,6 +43,7 @@
                                      onerror="this.style.background='#E5E2E0'; this.src='';">
                             </td>
                             <td><strong>${product.name}</strong></td>
+                            <td>${product.sku}</td>
                             <td>${product.categoryName}</td>
                             <td>$${product.price}</td>
                             <td>
@@ -53,17 +55,16 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <c:if test="${product.featured}"><i class="fa-solid fa-star" style="color: #8a7040;"></i></c:if>
-                                <c:if test="${!product.featured}"><i class="fa-regular fa-star" style="color: var(--clay-muted);"></i></c:if>
+                                <span class="status-badge status-${product.status}">${product.status}</span>
                             </td>
                             <td>
                                 <div style="display: flex; gap: 0.4rem;">
-                                    <a href="${pageContext.request.contextPath}/admin/product/edit?id=${product.id}" class="btn btn-secondary btn-sm">
+                                    <a href="${pageContext.request.contextPath}/admin/product/edit?id=${product.productId}" class="btn btn-secondary btn-sm">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
                                     <form action="${pageContext.request.contextPath}/admin/product/delete" method="post"
                                           onsubmit="return confirm('Delete this product?');">
-                                        <input type="hidden" name="id" value="${product.id}">
+                                        <input type="hidden" name="id" value="${product.productId}">
                                         <button type="submit" class="btn btn-danger btn-sm">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>

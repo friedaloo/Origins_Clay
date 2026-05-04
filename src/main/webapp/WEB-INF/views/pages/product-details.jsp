@@ -44,7 +44,7 @@
 
         <c:if test="${product.stockQuantity > 0}">
             <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem;">
-                <input type="hidden" name="productId" value="${product.id}">
+                <input type="hidden" name="productId" value="${product.productId}">
                 <div class="field" style="margin-bottom: 0; width: 80px;">
                     <label for="quantity">Qty</label>
                     <input type="number" id="quantity" name="quantity" value="1" min="1" max="${product.stockQuantity}">
@@ -56,7 +56,7 @@
         </c:if>
 
         <form action="${pageContext.request.contextPath}/wishlist/add" method="post" style="display: inline;">
-            <input type="hidden" name="productId" value="${product.id}">
+            <input type="hidden" name="productId" value="${product.productId}">
             <button type="submit" class="btn btn-secondary">
                 <i class="fa-regular fa-heart"></i> Add to Wishlist
             </button>

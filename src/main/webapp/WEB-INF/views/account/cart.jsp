@@ -78,9 +78,23 @@
 
                     <form action="${pageContext.request.contextPath}/cart/checkout" method="post">
                         <div class="field">
+                            <label for="shippingName">Full Name</label>
+                            <input type="text" id="shippingName" name="shippingName"
+                                   value="${sessionScope.loggedInUser.fullName}" placeholder="Full name for shipping">
+                        </div>
+                        <div class="field">
+                            <label for="shippingPhone">Phone</label>
+                            <input type="text" id="shippingPhone" name="shippingPhone"
+                                   value="${sessionScope.loggedInUser.phone}" placeholder="Contact phone number">
+                        </div>
+                        <div class="field">
                             <label for="shippingAddress">Shipping Address</label>
                             <textarea id="shippingAddress" name="shippingAddress" placeholder="Enter your shipping address"
                                       style="min-height: 80px;">${sessionScope.loggedInUser.address}</textarea>
+                        </div>
+                        <div class="field">
+                            <label for="shippingCity">City</label>
+                            <input type="text" id="shippingCity" name="shippingCity" placeholder="City">
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">
                             <i class="fa-solid fa-bag-shopping"></i> Place Order

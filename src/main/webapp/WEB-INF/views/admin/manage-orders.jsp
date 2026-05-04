@@ -25,22 +25,22 @@
                 <tbody>
                     <c:forEach var="order" items="${orders}">
                         <tr>
-                            <td><strong>#${order.id}</strong></td>
-                            <td>${order.customerName}</td>
+                            <td><strong>#${order.orderId}</strong></td>
+                            <td>${order.shippingName}</td>
                             <td>$${order.totalAmount}</td>
-                            <td><span class="status-badge status-${order.status}">${order.status}</span></td>
-                            <td>${order.createdAt}</td>
+                            <td><span class="status-badge status-${order.orderStatus}">${order.orderStatus}</span></td>
+                            <td>${order.orderDate}</td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/admin/order/update-status" method="post"
                                       style="display: flex; gap: 0.4rem; align-items: center;">
-                                    <input type="hidden" name="orderId" value="${order.id}">
+                                    <input type="hidden" name="orderId" value="${order.orderId}">
                                     <select name="status" style="padding: 0.4rem; font-size: 0.78rem; background: var(--clay-input); border: none;">
-                                        <option value="pending"    ${order.status == 'pending'    ? 'selected' : ''}>Pending</option>
-                                        <option value="processing" ${order.status == 'processing' ? 'selected' : ''}>Processing</option>
-                                        <option value="shipped"    ${order.status == 'shipped'    ? 'selected' : ''}>Shipped</option>
-                                        <option value="delivered"  ${order.status == 'delivered'  ? 'selected' : ''}>Delivered</option>
-                                        <option value="cancelled"  ${order.status == 'cancelled'  ? 'selected' : ''}>Cancelled</option>
-                                        <option value="returned"   ${order.status == 'returned'   ? 'selected' : ''}>Returned</option>
+                                        <option value="pending"    ${order.orderStatus == 'pending'    ? 'selected' : ''}>Pending</option>
+                                        <option value="processing" ${order.orderStatus == 'processing' ? 'selected' : ''}>Processing</option>
+                                        <option value="shipped"    ${order.orderStatus == 'shipped'    ? 'selected' : ''}>Shipped</option>
+                                        <option value="delivered"  ${order.orderStatus == 'delivered'  ? 'selected' : ''}>Delivered</option>
+                                        <option value="cancelled"  ${order.orderStatus == 'cancelled'  ? 'selected' : ''}>Cancelled</option>
+                                        <option value="returned"   ${order.orderStatus == 'returned'   ? 'selected' : ''}>Returned</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.4rem 0.7rem;">
                                         <i class="fa-solid fa-arrows-rotate"></i>
@@ -62,7 +62,7 @@
 <c:if test="${not empty order}">
     <div class="card" style="margin-top: 1.5rem;">
         <h2 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1rem;">
-            Order #${order.id} — ${order.customerName}
+            Order #${order.orderId} — ${order.shippingName}
         </h2>
         <table>
             <thead>
@@ -81,8 +81,8 @@
         </table>
         <div style="margin-top: 1rem; font-size: 0.88rem;">
             <strong>Total:</strong> $${order.totalAmount} |
-            <strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span> |
-            <strong>Shipping:</strong> ${order.shippingAddress}
+            <strong>Status:</strong> <span class="status-badge status-${order.orderStatus}">${order.orderStatus}</span> |
+            <strong>Shipping:</strong> ${order.shippingAddress}, ${order.shippingCity}
         </div>
     </div>
 </c:if>

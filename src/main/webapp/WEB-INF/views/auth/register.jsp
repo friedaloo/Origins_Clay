@@ -143,6 +143,10 @@
     </c:if>
 
     <form action="${pageContext.request.contextPath}/register" method="post">
+        <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Choose a username">
+        </div>
         <div class="row">
             <div class="field">
                 <label for="firstName">First Name</label>
