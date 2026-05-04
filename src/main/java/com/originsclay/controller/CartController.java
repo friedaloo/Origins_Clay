@@ -170,9 +170,8 @@ public class CartController extends HttpServlet {
         if (success) {
             // Clear cart
             request.getSession().removeAttribute("cart");
-            request.setAttribute("success", "Order placed successfully!");
-            request.getRequestDispatcher("/WEB-INF/views/account/orders.jsp")
-                   .forward(request, response);
+            request.getSession().setAttribute("checkoutSuccess", "Order placed successfully!");
+            response.sendRedirect(request.getContextPath() + "/account/orders");
         } else {
             request.setAttribute("error", "Failed to place order. Please try again.");
             request.getRequestDispatcher("/WEB-INF/views/account/cart.jsp")

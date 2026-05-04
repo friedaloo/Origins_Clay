@@ -47,6 +47,14 @@ public class OrderController extends HttpServlet {
         } else {
             List<Order> orders = orderService.findByUserId(user.getId());
             request.setAttribute("orders", orders);
+
+            // Check for checkout success message
+            String checkoutMsg = (String) request.getSession().getAttribute("checkoutSuccess");
+            if (checkoutMsg != null) {
+                request.setAttribute("success", checkoutMsg);
+                request.getSession().removeAttribute("checkoutSuccess");
+            }
+
             request.getRequestDispatcher("/WEB-INF/views/account/orders.jsp")
                    .forward(request, response);
         }
