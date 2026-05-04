@@ -1,75 +1,230 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body 
+        {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
 
-<jsp:include page="/WEB-INF/components/header.jsp">
-    <jsp:param name="pageTitle" value="Home" />
-</jsp:include>
+        .container 
+        {
+            max-width: 1171px;
+            width: 90%;
+            margin: auto;
+        }
 
-<!-- ====== HERO ====== -->
-<section style="text-align: center; padding: 4rem 1rem 3rem;">
-    <p style="font-size: 0.6rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--clay-muted); margin-bottom: 0.8rem;">Handcrafted With Purpose</p>
-    <h1 style="font-family: var(--font-serif); font-size: 3.2rem; font-weight: 400; line-height: 1.15; margin-bottom: 1rem;">
-        <em>Timeless</em> <strong>Clay</strong>,<br>Modern <em>Living</em>
-    </h1>
-    <p style="font-size: 0.88rem; color: var(--clay-muted); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7;">
-        Every piece in our collection tells a story — shaped by hand, fired with intention, and designed to bring warmth to your everyday rituals.
-    </p>
-    <a href="${pageContext.request.contextPath}/products" class="btn btn-primary">Explore the Collection</a>
-</section>
+        .outer-section 
+        {
+            display: flex;
+            justify-content: space-between;
+            padding: 80px 0;
+            gap: 90px;
+        }
 
-<!-- ====== FEATURED PRODUCTS ====== -->
-<section style="padding: 2rem 0 3rem;">
-    <h2 class="page-title" style="text-align: center;"><em>Featured</em> <strong>Pieces</strong></h2>
-    <p class="page-subtitle" style="text-align: center;">Curated selections from our artisan workshop</p>
+        .text-part 
+        {
+            width: 100%;
+            max-width: 521px;
+        }
 
-    <div class="grid-3">
-        <c:forEach var="product" items="${featuredProducts}">
-            <div class="product-card">
-                <img src="${pageContext.request.contextPath}/${product.imageUrl}" 
-                     alt="${product.name}"
-                     onerror="this.style.background='#E5E2E0'; this.src='';">
-                <div class="info">
-                    <span class="category-label">${product.categoryName}</span>
-                    <h3>${product.name}</h3>
-                    <div class="price">$${product.price}</div>
-                </div>
-                <div class="actions">
-                    <a href="${pageContext.request.contextPath}/product-details?id=${product.id}" class="btn btn-secondary btn-sm">View</a>
-                    <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display:inline;">
-                        <input type="hidden" name="productId" value="${product.id}">
-                        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-                    </form>
-                </div>
-            </div>
-        </c:forEach>
+        .desc 
+        {
+            font-size: 18px;
+            color: black;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
 
-        <c:if test="${empty featuredProducts}">
-            <p style="grid-column: 1/-1; text-align: center; color: var(--clay-muted); padding: 3rem;">
-                No featured products yet. Check back soon!
+        .explore 
+        {
+            background: #5ebe5e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+        }
+
+        .explore:hover 
+        {
+            background: brown;
+            cursor: pointer;
+        }
+
+        .overlapping-images 
+        {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .big-image 
+        {
+            width: 95%;
+            aspect-ratio: 8.7/10;
+            background: #ddd;
+            border: 2px solid #aaa;
+        }
+
+        .small-image 
+        {
+            width: 25%;
+            aspect-ratio: 1/1;
+            background: #ddd;
+            border: 2px solid #aaa;
+            position: absolute;
+            top: -60px;
+            right: -20px;
+        }
+        .middle-section 
+        {
+            display: flex;
+            justify-content: space-between;
+
+        }
+        #right-text 
+        {
+            text-decoration: underline;
+            font-size: 18px;
+        }
+        #right-image 
+        {
+            width: 100%;
+            max-width: 630px;
+            aspect-ratio: 11/10;
+            background: #ddd;
+            border: 2px solid #aaa;
+        }
+        .three-image 
+        {
+            display: flex;
+            justify-content: space-between;
+        }
+        #left-image 
+        {
+            max-width: 420px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        #top-image
+        {
+            max-width: 420px;
+            width: 100%;
+            aspect-ratio: 31/19;
+            background: #ddd;
+            border: 2px solid #aaa;
+        }
+        #bottom-image 
+        {
+            max-width: 420px;
+            width: 100%;
+            aspect-ratio: 31/19;
+            background: #ddd;
+            border: 2px solid #aaa;
+        }
+        @media (max-width: 768px)
+        {
+            .outer-section
+            {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .overlapping-images
+            {
+                margin-top: 30px;
+            }
+            .middle-section
+            {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .three-image
+            {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            #right-image
+            {
+                flex: 2;
+                width: 100%;
+            }
+
+            #left-image
+            {
+                flex: 1;
+                width: 100%;
+            }
+            #top-image
+            {
+                aspect-ratio: 31/25;
+            }
+            #bottom-image
+            {
+                aspect-ratio: 31/25;
+            }
+            .small-image
+            {
+                top: -40px;
+                right: -5px;
+                width: 30%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <section class="outer-section">
+        <div class="text-part">
+            <h1>Object for Slow Living</h1>
+
+            <p class="desc">
+                Every piece is hand-thrown in our coastal studio, 
+                celebrating the raw texture of stonewarwe and the 
+                quiet rhythm of daily rituals.
             </p>
-        </c:if>
-    </div>
-</section>
 
-<!-- ====== VALUES SECTION ====== -->
-<section style="padding: 2rem 0 3rem;">
-    <div class="grid-3">
-        <div class="card" style="text-align: center; padding: 2.5rem;">
-            <i class="fa-solid fa-hands" style="font-size: 1.8rem; color: var(--clay-olive); margin-bottom: 1rem;"></i>
-            <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Handcrafted</h3>
-            <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">Every piece is shaped by hand, making each one uniquely yours.</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 2.5rem;">
-            <i class="fa-solid fa-leaf" style="font-size: 1.8rem; color: var(--clay-olive); margin-bottom: 1rem;"></i>
-            <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Sustainable</h3>
-            <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">We use locally sourced clay and eco-friendly glazes.</p>
-        </div>
-        <div class="card" style="text-align: center; padding: 2.5rem;">
-            <i class="fa-solid fa-truck-fast" style="font-size: 1.8rem; color: var(--clay-olive); margin-bottom: 1rem;"></i>
-            <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Carefully Shipped</h3>
-            <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">Each order is wrapped with care and delivered to your doorstep.</p>
-        </div>
-    </div>
-</section>
+                <button class="explore">Explore</button>
+            </div>
 
-<jsp:include page="/WEB-INF/components/footer.jsp" />
+        <div class="overlapping-images">
+            <div class="big-image"></div>
+            <div class="small-image"></div>
+        </div>
+    </section>
+    <p>CURRENT SITUATION</p>
+    <section class="middle-section">
+        <div id="left-text">
+            <h1>FEATURED SERIES</h1>
+        </div>
+        <div id="right-text">
+            <p>View All</p>
+        </div>
+    </section>
+    <section class="three-image">
+        <div id="right-image">
+        </div>
+        <div id="left-image">
+            <div id="top-image"></div>
+            <div id="bottom-image"></div>
+        </div>
+    </section>
+    
+</div>
+
+</body>
+</html>
