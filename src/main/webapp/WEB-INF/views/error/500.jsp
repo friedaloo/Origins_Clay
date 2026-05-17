@@ -4,71 +4,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>500 — Server Error</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Document</title>
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Jost', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f5f0eb;
-            text-align: center;
-            padding: 2rem;
+        body
+        {
+            font-family:Arial, sans-serif;
+            background:#efeedf;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:20px;
         }
-        .error-container { max-width: 480px; }
-        .error-code {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 8rem;
-            font-weight: 600;
-            color: #8a7040;
-            line-height: 1;
-            margin-bottom: 0.5rem;
+
+        .outer-div
+        {
+            padding-top: 100px;
+            text-align:center;
         }
-        .error-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: #3a3530;
-            margin-bottom: 1rem;
+
+        .outer-div h1
+        {
+            font-size:80px;
+            color:#1f1f1f;
+            font-weight:400;
+            margin-bottom:40px;
         }
-        .error-desc {
-            font-size: 0.88rem;
-            color: #7a7268;
-            line-height: 1.7;
-            margin-bottom: 2rem;
+
+        .buttons
+        {
+            gap:20px;
         }
-        .btn {
-            display: inline-block;
-            background: #51643E;
-            color: #fff;
-            border: none;
-            padding: 0.85rem 2rem;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.68rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background 0.2s;
+        .btn1
+        {
+            margin: auto;
+            width:220px;
+            height:55px;
+            display:flex;
+            background:#556b3f;
+            color:white;
+            justify-content:center;
+            align-items:center;
+            text-decoration:none;
+            font-size:12px;
+            letter-spacing:2px;
+            transition:0.3s ease;
         }
-        .btn:hover { background: #3f4f2f; }
+
+        .btn1:hover
+        {
+            background:#3a452e;
+        }
+
+        @media (max-width:768px)
+        {
+
+            .outer-div h1
+            {
+                font-size:55px;
+                margin-bottom:30px;
+            }
+
+            .buttons
+            {
+                flex-direction:column;
+                align-items:center;
+            }
+
+            .btn1
+            {
+                width:100%;
+                max-width:300px;
+            }
+        }
+
+        @media (max-width:480px)
+        {
+
+            .outer-div h1
+            {
+                font-size:42px;
+            }
+
+            .btn1
+            {
+                height:50px;
+                font-size:11px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <div class="error-container">
-        <div class="error-code">500</div>
-        <h1 class="error-title"><em>Something</em> <strong>Cracked</strong></h1>
-        <p class="error-desc">
-            An unexpected error occurred on our end.
-            Our artisans are working to fix it. Please try again later.
-        </p>
-        <a href="${pageContext.request.contextPath}/home" class="btn">Return Home</a>
+    <div class="outer-div">
+        <h1>500 Error</h1>
+        <div class="buttons">
+            <a href="${pageContext.request.contextPath}/home" class="btn1">Return Back</a>
+        </div>
     </div>
 </body>
 </html>
