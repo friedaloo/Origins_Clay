@@ -35,7 +35,7 @@ public class CartController extends HttpServlet {
         // Add featured products for recommendations
         request.setAttribute("recommendations", productService.findFeatured());
 
-        request.getRequestDispatcher("/WEB-INF/views/pages/collection.jsp")
+        request.getRequestDispatcher("/WEB-INF/views/pages/cart.jsp")
                .forward(request, response);
     }
 
@@ -100,6 +100,15 @@ public class CartController extends HttpServlet {
         }
 
         request.getSession().setAttribute("cart", cart);
+
+        // Check if request
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": true, \"message\": \"Product added to cart\"}");
+            return;
+        }
+
         response.sendRedirect(request.getContextPath() + "/cart");
     }
 
