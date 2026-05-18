@@ -6,8 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * CookieUtil - Helpers for reading, creating, and deleting cookies.
- * Satisfies rubric MS1P3 "Cookies handling".
- */
+ **/
 public class CookieUtil {
 
     /** Default cookie max-age: 7 days */
