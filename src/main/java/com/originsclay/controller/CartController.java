@@ -14,14 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * CartController - Session-based shopping cart.
- * Satisfies rubric 3e "Apply/Request" equivalent (add to cart / checkout).
- */
 @WebServlet(name = "CartController",
         urlPatterns = {"/cart", "/cart/add", "/cart/update", "/cart/remove", "/cart/checkout"})
 public class CartController extends HttpServlet {
@@ -36,14 +31,12 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
 
         String uri = request.getServletPath();
+        
+        // Add featured products for recommendations
+        request.setAttribute("recommendations", productService.findFeatured());
 
-        if ("/cart/checkout".equals(uri)) {
-            request.getRequestDispatcher("/WEB-INF/views/account/cart.jsp")
-                   .forward(request, response);   // cart page has checkout section
-        } else {
-            request.getRequestDispatcher("/WEB-INF/views/account/cart.jsp")
-                   .forward(request, response);
-        }
+        request.getRequestDispatcher("/WEB-INF/views/pages/collection.jsp")
+               .forward(request, response);
     }
 
     // --------- POST: add, update, remove, checkout ---------
@@ -102,6 +95,7 @@ public class CartController extends HttpServlet {
 
         if (!found) {
             cart.add(new CartItem(product.getId(), product.getName(),
+                    product.getCategoryName(), product.getDescription(),
                     product.getPrice(), quantity, product.getImageUrl()));
         }
 
