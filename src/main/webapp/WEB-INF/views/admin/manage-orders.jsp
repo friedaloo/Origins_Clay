@@ -5,86 +5,85 @@
     <jsp:param name="pageTitle" value="Manage Orders" />
 </jsp:include>
 
-<h1 class="page-title"><em>Manage</em> <strong>Orders</strong></h1>
-<p class="page-subtitle">View and update order statuses</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders - Origins Clay</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/adminstle/admin_styles.css">
+</head>
+<body>
 
-<div class="card">
-    <c:choose>
-        <c:when test="${not empty orders}">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order #</th>
-                        <th>Customer</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Update Status</th>
-                    </tr>
-                </thead>
-                <tbody>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h1>Origins Clay</h1>
+        <small>Studio Admin</small>
+    </div>
+    
+    <ul class="sidebar-menu">
+        <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/orders" class="active">Manage Orders</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="content-wrapper">
+    
+    <div class="page-header">
+        <h2>Inventory Management</h2>
+        <a href="#" class="btn">Add Product</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:choose>
+                <c:when test="${not empty orders}">
                     <c:forEach var="order" items="${orders}">
                         <tr>
-                            <td><strong>#${order.id}</strong></td>
+                            <td><img src="https://via.placeholder.com/40" alt="Product" class="img-thumb"></td>
                             <td>${order.customerName}</td>
                             <td>$${order.totalAmount}</td>
                             <td><span class="status-badge status-${order.status}">${order.status}</span></td>
                             <td>${order.createdAt}</td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/admin/order/update-status" method="post"
-                                      style="display: flex; gap: 0.4rem; align-items: center;">
+                                <form action="${pageContext.request.contextPath}/admin/order/update-status" method="post">
                                     <input type="hidden" name="orderId" value="${order.id}">
-                                    <select name="status" style="padding: 0.4rem; font-size: 0.78rem; background: var(--clay-input); border: none;">
-                                        <option value="pending"    ${order.status == 'pending'    ? 'selected' : ''}>Pending</option>
+                                    <select name="status">
+                                        <option value="pending" ${order.status == 'pending' ? 'selected' : ''}>Pending</option>
                                         <option value="processing" ${order.status == 'processing' ? 'selected' : ''}>Processing</option>
-                                        <option value="shipped"    ${order.status == 'shipped'    ? 'selected' : ''}>Shipped</option>
-                                        <option value="delivered"  ${order.status == 'delivered'  ? 'selected' : ''}>Delivered</option>
-                                        <option value="cancelled"  ${order.status == 'cancelled'  ? 'selected' : ''}>Cancelled</option>
-                                        <option value="returned"   ${order.status == 'returned'   ? 'selected' : ''}>Returned</option>
+                                        <option value="shipped" ${order.status == 'shipped' ? 'selected' : ''}>Shipped</option>
+                                        <option value="delivered" ${order.status == 'delivered' ? 'selected' : ''}>Delivered</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.4rem 0.7rem;">
-                                        <i class="fa-solid fa-arrows-rotate"></i>
-                                    </button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
                                 </form>
                             </td>
                         </tr>
                     </c:forEach>
-                </tbody>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <p style="text-align: center; color: var(--clay-muted); padding: 3rem;">No orders found.</p>
-        </c:otherwise>
-    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <tr><td colspan="6" style="text-align:center; color:var(--clay-muted); padding:1rem;">No orders found.</td></tr>
+                </c:otherwise>
+            </c:choose>
+        </tbody>
+    </table>
+
 </div>
 
-<!-- ====== SINGLE ORDER VIEW (when ?id= is used) ====== -->
-<c:if test="${not empty order}">
-    <div class="card" style="margin-top: 1.5rem;">
-        <h2 style="font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1rem;">
-            Order #${order.id} — ${order.customerName}
-        </h2>
-        <table>
-            <thead>
-                <tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr>
-            </thead>
-            <tbody>
-                <c:forEach var="item" items="${order.items}">
-                    <tr>
-                        <td>${item.productName}</td>
-                        <td>$${item.unitPrice}</td>
-                        <td>${item.quantity}</td>
-                        <td>$${item.subtotal}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        <div style="margin-top: 1rem; font-size: 0.88rem;">
-            <strong>Total:</strong> $${order.totalAmount} |
-            <strong>Status:</strong> <span class="status-badge status-${order.status}">${order.status}</span> |
-            <strong>Shipping:</strong> ${order.shippingAddress}
-        </div>
-    </div>
-</c:if>
+</body>
+</html>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />

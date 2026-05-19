@@ -5,80 +5,76 @@
     <jsp:param name="pageTitle" value="Manage Products" />
 </jsp:include>
 
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-    <div>
-        <h1 class="page-title"><em>Manage</em> <strong>Products</strong></h1>
-        <p class="page-subtitle" style="margin-bottom: 0;">Add, edit, or remove products</p>
-    </div>
-    <a href="${pageContext.request.contextPath}/admin/product/add" class="btn btn-primary">
-        <i class="fa-solid fa-plus"></i> Add Product
-    </a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - Origins Clay</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/adminstle/admin_styles.css">
+</head>
+<body>
 
-<div class="card">
-    <c:choose>
-        <c:when test="${not empty products}">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Origins Clay</h1>
+            <span>Studio Admin</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/products" class="active">Manage Products</a></li>
+        </ul>
+    </aside>
+
+    <main class="content-wrapper">
+        <div class="page-header">
+            <h2>Inventory Management</h2>
+            <a href="${pageContext.request.contextPath}/admin/product/add" class="btn">Add Product</a>
+        </div>
+
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Image</th>
-                        <th>Name</th>
+                        <th>Product Name</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Featured</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="product" items="${products}">
-                        <tr>
-                            <td>${product.id}</td>
-                            <td>
-                                <img src="${pageContext.request.contextPath}/${product.imageUrl}"
-                                     alt="${product.name}"
-                                     style="width: 45px; height: 45px; object-fit: cover; background: var(--clay-input);"
-                                     onerror="this.style.background='#E5E2E0'; this.src='';">
-                            </td>
-                            <td><strong>${product.name}</strong></td>
-                            <td>${product.categoryName}</td>
-                            <td>$${product.price}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${product.stockQuantity <= 5}">
-                                        <span style="color: var(--clay-danger); font-weight: 600;">${product.stockQuantity}</span>
-                                    </c:when>
-                                    <c:otherwise>${product.stockQuantity}</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>
-                                <c:if test="${product.featured}"><i class="fa-solid fa-star" style="color: #8a7040;"></i></c:if>
-                                <c:if test="${!product.featured}"><i class="fa-regular fa-star" style="color: var(--clay-muted);"></i></c:if>
-                            </td>
-                            <td>
-                                <div style="display: flex; gap: 0.4rem;">
-                                    <a href="${pageContext.request.contextPath}/admin/product/edit?id=${product.id}" class="btn btn-secondary btn-sm">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                    <form action="${pageContext.request.contextPath}/admin/product/delete" method="post"
-                                          onsubmit="return confirm('Delete this product?');">
-                                        <input type="hidden" name="id" value="${product.id}">
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${not empty products}">
+                            <c:forEach var="product" items="${products}">
+                                <tr>
+                                    <td><img src="${pageContext.request.contextPath}/${product.imageUrl}" alt="Product" class="img-thumb"></td>
+                                    <td>${product.name}</td>
+                                    <td>${product.categoryName}</td>
+                                    <td>$${product.price}</td>
+                                    <td>${product.stockQuantity}</td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/admin/product/edit?id=${product.id}" class="action-btn">Edit</a>
+                                        <form action="${pageContext.request.contextPath}/admin/product/delete" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="${product.id}">
+                                            <button type="submit" class="action-btn" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr><td colspan="6" style="text-align:center; color:var(--clay-muted); padding:1rem;">No products found.</td></tr>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
-        </c:when>
-        <c:otherwise>
-            <p style="text-align: center; color: var(--clay-muted); padding: 3rem;">No products found.</p>
-        </c:otherwise>
-    </c:choose>
-</div>
+        </div>
+    </main>
+
+</body>
+</html>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />

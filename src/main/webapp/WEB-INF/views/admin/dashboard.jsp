@@ -5,63 +5,81 @@
     <jsp:param name="pageTitle" value="Admin Dashboard" />
 </jsp:include>
 
-<h1 class="page-title"><em>Admin</em> <strong>Dashboard</strong></h1>
-<p class="page-subtitle">Overview of your pottery shop</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Origins Clay</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/adminstle/admin_styles.css">
+</head>
+<body>
 
-<!-- ====== STATS CARDS ====== -->
-<div class="grid-4" style="margin-bottom: 2rem;">
-    <div class="card" style="text-align: center; padding: 2rem; border-left: 4px solid var(--clay-olive);">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-olive);">${totalProducts}</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Products</div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>Origins Clay</h1>
+            <small>Studio Admin</small>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/orders">Manage Orders</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
+        </ul>
     </div>
-    <div class="card" style="text-align: center; padding: 2rem; border-left: 4px solid #8a7040;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: #8a7040;">${totalOrders}</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Orders</div>
-    </div>
-    <div class="card" style="text-align: center; padding: 2rem; border-left: 4px solid #2d6a4f;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: #2d6a4f;">$${totalRevenue}</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Revenue</div>
-    </div>
-    <div class="card" style="text-align: center; padding: 2rem; border-left: 4px solid var(--clay-brown);">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-brown);">${totalUsers}</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Users</div>
-    </div>
-</div>
 
-<!-- ====== QUICK LINKS ====== -->
-<div class="grid-3">
-    <div class="card" style="text-align: center; padding: 2.5rem;">
-        <i class="fa-solid fa-boxes-stacked" style="font-size: 2rem; color: var(--clay-olive); margin-bottom: 1rem;"></i>
-        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Manage Products</h3>
-        <p style="font-size: 0.78rem; color: var(--clay-muted); margin-bottom: 1.2rem;">Add, edit, or remove products from the catalogue.</p>
-        <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-primary btn-sm">Manage</a>
-    </div>
-    <div class="card" style="text-align: center; padding: 2.5rem;">
-        <i class="fa-solid fa-truck" style="font-size: 2rem; color: #8a7040; margin-bottom: 1rem;"></i>
-        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Manage Orders</h3>
-        <p style="font-size: 0.78rem; color: var(--clay-muted); margin-bottom: 1.2rem;">
-            View and update order statuses.
-            <c:if test="${pendingOrders > 0}">
-                <br><strong style="color: var(--clay-danger);">${pendingOrders} pending</strong>
-            </c:if>
-        </p>
-        <a href="${pageContext.request.contextPath}/admin/orders" class="btn btn-primary btn-sm">Manage</a>
-    </div>
-    <div class="card" style="text-align: center; padding: 2.5rem;">
-        <i class="fa-solid fa-users" style="font-size: 2rem; color: var(--clay-brown); margin-bottom: 1rem;"></i>
-        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Manage Users</h3>
-        <p style="font-size: 0.78rem; color: var(--clay-muted); margin-bottom: 1.2rem;">Approve or manage customer accounts.</p>
-        <a href="${pageContext.request.contextPath}/admin/users" class="btn btn-primary btn-sm">Manage</a>
-    </div>
-</div>
+    <div class="content-wrapper">
+        
+        <div class="page-header">
+            <h2>Overview</h2>
+            <a href="#" class="btn">Reports</a>
+        </div>
 
-<div style="margin-top: 1.5rem;">
-    <div class="card" style="text-align: center; padding: 2.5rem;">
-        <i class="fa-solid fa-chart-line" style="font-size: 2rem; color: #2d6a4f; margin-bottom: 1rem;"></i>
-        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 0.5rem;">Reports & Analytics</h3>
-        <p style="font-size: 0.78rem; color: var(--clay-muted); margin-bottom: 1.2rem;">View sales data, stock levels, and business insights.</p>
-        <a href="${pageContext.request.contextPath}/admin/reports" class="btn btn-primary btn-sm">View Reports</a>
+        <div class="cards">
+            <div class="card">
+                <small>Monthly Revenue</small>
+                <h2>$14,280</h2>
+                <small>+12% from last month</small>
+            </div>
+
+            <div class="card">
+                <small>Open Orders</small>
+                <h2>42</h2>
+                <small>8 awaiting glazing</small>
+            </div>
+
+            <div class="card dark">
+                <small>Kiln Status</small>
+                <h2>1240°C</h2>
+                <small>Firing · Cone 6</small>
+            </div>
+        </div>
+
+        <div class="section-title">Recent Activity</div>
+        
+        <div class="activity">
+            <div class="activity-item">
+                <span>New order received</span>
+                <span>›</span>
+            </div>
+            <div class="activity-item">
+                <span>Kiln reached peak temperature</span>
+                <span>›</span>
+            </div>
+            <div class="activity-item">
+                <span>Inventory updated</span>
+                <span>›</span>
+            </div>
+            <div class="activity-item">
+                <span>Shipping confirmation</span>
+                <span>›</span>
+            </div>
+        </div>
+
     </div>
-</div>
+
+</body>
+</html>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />

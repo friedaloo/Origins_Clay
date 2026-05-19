@@ -5,83 +5,80 @@
     <jsp:param name="pageTitle" value="Manage Users" />
 </jsp:include>
 
-<h1 class="page-title"><em>Manage</em> <strong>Users</strong></h1>
-<p class="page-subtitle">Approve, reject, or manage user accounts</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Origins Clay</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/adminstle/admin_styles.css">
+</head>
+<body>
 
-<div class="card">
-    <c:choose>
-        <c:when test="${not empty users}">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Origins Clay</h1>
+            <span>Studio Admin</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/users" class="active">Manage Users</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
+        </ul>
+    </aside>
+
+    <main class="content-wrapper">
+        <div class="page-header">
+            <h2>User Management</h2>
+        </div>
+
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Full Name</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Joined</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="u" items="${users}">
-                        <tr>
-                            <td>${u.id}</td>
-                            <td><strong>${u.fullName}</strong></td>
-                            <td>${u.email}</td>
-                            <td>
-                                <span style="font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
-                                    color: ${u.role == 'admin' ? 'var(--clay-olive)' : 'var(--clay-muted)'};">${u.role}</span>
-                            </td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${u.approved}">
-                                        <span class="status-badge status-delivered">Approved</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="status-badge status-pending">Pending</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${u.createdAt}</td>
-                            <td>
-                                <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
-                                    <c:if test="${!u.approved}">
-                                        <form action="${pageContext.request.contextPath}/admin/user/approve" method="post" style="display:inline;">
+                    <c:choose>
+                        <c:when test="${not empty users}">
+                            <c:forEach var="u" items="${users}">
+                                <tr class="${!u.approved ? 'row-pending' : ''}">
+                                    <td>${u.id}</td>
+                                    <td>${u.fullName}</td>
+                                    <td>${u.email}</td>
+                                    <td>${u.role}</td>
+                                    <td>${u.approved ? 'Active' : 'Pending'}</td>
+                                    <td>
+                                        <c:if test="${!u.approved}">
+                                            <form action="${pageContext.request.contextPath}/admin/user/approve" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" value="${u.id}">
+                                                <button type="submit" class="action-btn">Activate</button>
+                                            </form>
+                                        </c:if>
+                                        <form action="${pageContext.request.contextPath}/admin/user/delete" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?')">
                                             <input type="hidden" name="id" value="${u.id}">
-                                            <button type="submit" class="btn btn-primary btn-sm" title="Approve">
-                                                <i class="fa-solid fa-check"></i>
-                                            </button>
+                                            <button type="submit" class="action-btn">Delete</button>
                                         </form>
-                                    </c:if>
-                                    <c:if test="${u.approved && u.role != 'admin'}">
-                                        <form action="${pageContext.request.contextPath}/admin/user/reject" method="post" style="display:inline;">
-                                            <input type="hidden" name="id" value="${u.id}">
-                                            <button type="submit" class="btn btn-secondary btn-sm" title="Revoke Approval">
-                                                <i class="fa-solid fa-ban"></i>
-                                            </button>
-                                        </form>
-                                    </c:if>
-                                    <c:if test="${u.role != 'admin'}">
-                                        <form action="${pageContext.request.contextPath}/admin/user/delete" method="post"
-                                              onsubmit="return confirm('Delete this user?');" style="display:inline;">
-                                            <input type="hidden" name="id" value="${u.id}">
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Delete">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
-                                    </c:if>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr><td colspan="6" style="text-align:center; color:var(--clay-muted); padding:1rem;">No users found.</td></tr>
+                        </c:otherwise>
+                    </c:choose>
                 </tbody>
             </table>
-        </c:when>
-        <c:otherwise>
-            <p style="text-align: center; color: var(--clay-muted); padding: 3rem;">No users found.</p>
-        </c:otherwise>
-    </c:choose>
-</div>
+        </div>
+    </main>
+
+</body>
+</html>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />
