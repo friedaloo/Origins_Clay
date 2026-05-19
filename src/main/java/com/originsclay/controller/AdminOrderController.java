@@ -7,14 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
-
-/**
- * AdminOrderController - Manage orders (status updates, view details).
- * Satisfies rubric 2b "Manage issue/return status".
- */
 @WebServlet(name = "AdminOrderController",
         urlPatterns = {"/admin/orders", "/admin/order/view", "/admin/order/update-status"})
 public class AdminOrderController extends HttpServlet {

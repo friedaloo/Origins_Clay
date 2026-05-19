@@ -1,10 +1,8 @@
 package com.originsclay.controller;
 
-import com.originsclay.model.Category;
 import com.originsclay.model.Product;
 import com.originsclay.service.CategoryService;
 import com.originsclay.service.ProductService;
-import com.originsclay.util.ValidationUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,11 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
-
-/**
- * AdminProductController - CRUD for products (admin only).
- * Satisfies rubric 2a.
- */
 @WebServlet(name = "AdminProductController",
         urlPatterns = {"/admin/products", "/admin/product/add",
                        "/admin/product/edit", "/admin/product/delete"})

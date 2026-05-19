@@ -9,16 +9,20 @@ public class CartItem {
 
     private int productId;
     private String productName;
+    private String categoryName;
+    private String description;
     private BigDecimal price;
     private int quantity;
     private String imageUrl;
 
     public CartItem() {}
 
-    public CartItem(int productId, String productName, BigDecimal price,
-                    int quantity, String imageUrl) {
+    public CartItem(int productId, String productName, String categoryName, String description, 
+                    BigDecimal price, int quantity, String imageUrl) {
         this.productId = productId;
         this.productName = productName;
+        this.categoryName = categoryName;
+        this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.imageUrl = imageUrl;
@@ -31,6 +35,12 @@ public class CartItem {
 
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
+
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }

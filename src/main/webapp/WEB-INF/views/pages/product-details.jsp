@@ -3,69 +3,433 @@
 
 <jsp:include page="/WEB-INF/components/header.jsp">
     <jsp:param name="pageTitle" value="${product.name}" />
+    <jsp:param name="extraCSS" value="
+        <style>
+            :root {
+                --clay-primary: #3c3833;
+                --clay-secondary: #e8e8e8;
+                --clay-accent: #a67c52;
+                --clay-text: #333;
+                --clay-muted: #666;
+                --clay-success: #2d5a27;
+                --clay-danger: #a94442;
+                --clay-bg: #f9f7f5;
+                --clay-border: #e0ddd9;
+            }
+
+            .product-page {
+                max-width: 1200px;
+                margin: 60px auto;
+                padding: 0 30px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .product-layout {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 60px;
+                align-items: flex-start;
+            }
+
+            .product-media {
+                flex: 1.2;
+                min-width: 400px;
+            }
+
+            .product-media img {
+                width: 100%;
+                height: 600px;
+                object-fit: cover;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+
+            .product-details {
+                flex: 1;
+                min-width: 400px;
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .product-meta {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .category-label {
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--clay-accent);
+                font-weight: 700;
+            }
+
+            .product-title {
+                font-size: 42px;
+                color: var(--clay-primary);
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            .product-price-tag {
+                font-size: 28px;
+                color: var(--clay-primary);
+                font-weight: 500;
+            }
+
+            .product-desc {
+                font-size: 16px;
+                line-height: 1.8;
+                color: var(--clay-muted);
+                border-top: 1px solid var(--clay-border);
+                border-bottom: 1px solid var(--clay-border);
+                padding: 25px 0;
+            }
+
+            .stock-info {
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .stock-in { color: var(--clay-success); }
+            .stock-out { color: var(--clay-danger); }
+
+            .purchase-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin-top: 10px;
+            }
+
+            .qty-selector {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .qty-selector label {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--clay-primary);
+            }
+
+            .qty-input-field {
+                width: 70px;
+                padding: 12px;
+                border: 1px solid var(--clay-border);
+                border-radius: 6px;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .btn-group {
+                display: flex;
+                gap: 15px;
+            }
+
+            .btn-clay {
+                padding: 16px 32px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                text-decoration: none;
+                flex: 1;
+            }
+
+            .btn-clay-primary {
+                background-color: var(--clay-primary);
+                color: white;
+            }
+
+            .btn-clay-primary:hover {
+                background-color: #2c2823;
+                transform: translateY(-2px);
+            }
+
+            .btn-clay-outline {
+                background-color: transparent;
+                border: 2px solid var(--clay-primary);
+                color: var(--clay-primary);
+            }
+
+            .btn-clay-outline:hover {
+                background-color: var(--clay-secondary);
+                transform: translateY(-2px);
+            }
+
+            .btn-clay-danger {
+                background-color: transparent;
+                border: 2px solid var(--clay-danger);
+                color: var(--clay-danger);
+            }
+
+            .btn-clay-danger:hover {
+                background-color: #fff5f5;
+                transform: translateY(-2px);
+            }
+
+            .secondary-actions {
+                display: flex;
+                gap: 15px;
+                margin-top: 10px;
+            }
+
+            .nav-back {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--clay-muted);
+                text-decoration: none;
+                font-size: 14px;
+                transition: color 0.2s;
+            }
+
+            .nav-back:hover {
+                color: var(--clay-primary);
+            }
+
+            /* Toast Notification */
+            #clay-toast {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: white;
+                border-left: 5px solid var(--clay-success);
+                padding: 20px 30px;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                transform: translateY(150%);
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                z-index: 9999;
+            }
+
+            #clay-toast.show {
+                transform: translateY(0);
+            }
+
+            #clay-toast i {
+                color: var(--clay-success);
+                font-size: 24px;
+            }
+
+            #clay-toast .toast-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #clay-toast .toast-title {
+                font-weight: 700;
+                color: var(--clay-primary);
+                margin-bottom: 4px;
+            }
+
+            #clay-toast .toast-msg {
+                font-size: 14px;
+                color: var(--clay-muted);
+            }
+
+            .related-item:hover .rel-img-wrap img {
+                transform: scale(1.05);
+            }
+
+            .related-item h3 {
+                font-size: 14px;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .related-item .rel-price {
+                font-size: 12px;
+                color: var(--clay-muted);
+            }
+
+            /* Responsive */
+            @media (max-width: 1024px) {
+                .product-media, .product-details {
+                    min-width: 100%;
+                }
+                .product-media img {
+                    height: 500px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .product-page {
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+                .product-title {
+                    font-size: 32px;
+                }
+                .btn-group {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    " />
 </jsp:include>
 
-<div style="display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 1rem;">
+<main class="product-page">
+    <div class="product-layout">
+        <!-- Media Section -->
+        <section class="product-media">
+            <img src="${pageContext.request.contextPath}/${product.imageUrl}" 
+                 alt="${product.name}"
+                 onerror="this.src='${pageContext.request.contextPath}/assets/images/placeholder.jpg';">
+        </section>
 
-    <!-- Product Image -->
-    <div style="flex: 1; min-width: 300px;">
-        <img src="${pageContext.request.contextPath}/${product.imageUrl}" 
-             alt="${product.name}"
-             style="width: 100%; height: 420px; object-fit: cover; background: var(--clay-input);"
-             onerror="this.style.background='#E5E2E0'; this.src='';">
+        <!-- Details Section -->
+        <section class="product-details">
+            <div class="product-meta">
+                <span class="category-label">${product.categoryName}</span>
+                <h1 class="product-title">${product.name}</h1>
+                <div class="product-price-tag">$${product.price}</div>
+            </div>
+
+            <p class="product-desc">
+                ${product.description}
+            </p>
+
+            <div class="stock-info">
+                <c:choose>
+                    <c:when test="${product.stockQuantity > 0}">
+                        <span class="stock-in">
+                            <i class="fa-solid fa-circle-check"></i> In Stock (${product.stockQuantity} available)
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="stock-out">
+                            <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+                        </span>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <div class="purchase-actions">
+                <c:if test="${product.stockQuantity > 0}">
+                    <form id="addToCartForm" class="qty-selector">
+                        <input type="hidden" name="productId" value="${product.id}">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="${product.stockQuantity}" class="qty-input-field">
+                        
+                        <button type="submit" class="btn-clay btn-clay-primary">
+                            <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+                        </button>
+                    </form>
+                </c:if>
+
+                <div class="secondary-actions">
+                    <form action="${pageContext.request.contextPath}/wishlist/add" method="post" style="flex: 1;">
+                        <input type="hidden" name="productId" value="${product.id}">
+                        <button type="submit" class="btn-clay btn-clay-outline">
+                            <i class="fa-regular fa-heart"></i> Wishlist
+                        </button>
+                    </form>
+
+                    <c:if test="${sessionScope.userRole == 'admin'}">
+                        <button type="button" class="btn-clay btn-clay-danger" onclick="handleDelete('${product.id}');">
+                            <i class="fa-solid fa-trash-can"></i> Delete
+                        </button>
+                    </c:if>
+                </div>
+            </div>
+
+            <a href="${pageContext.request.contextPath}/products" class="nav-back">
+                <i class="fa-solid fa-arrow-left-long"></i> Back to Shop
+            </a>
+        </section>
     </div>
 
-    <!-- Product Info -->
-    <div style="flex: 1; min-width: 300px;">
-        <span class="page-subtitle" style="margin-bottom: 0.5rem;">${product.categoryName}</span>
-        <h1 class="page-title" style="margin-bottom: 0.5rem;">${product.name}</h1>
-        <div style="font-size: 1.6rem; font-weight: 500; color: var(--clay-olive); margin-bottom: 1.2rem;">
-            $${product.price}
-        </div>
+    <!-- Related Products Section -->
+    <c:if test="${not empty relatedProducts}">
+        <section class="related-section" style="margin-top: 120px; border-top: 1px solid var(--clay-border); padding-top: 80px;">
+            <h2 style="font-family: var(--font-serif); font-size: 32px; margin-bottom: 50px; text-align: center;">Complete the Set</h2>
+            <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 40px;">
+                <c:forEach var="rel" items="${relatedProducts}" begin="0" end="3">
+                    <a href="${pageContext.request.contextPath}/product-details?id=${rel.id}" class="related-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 15px;">
+                        <div class="rel-img-wrap" style="width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f0f0f0;">
+                            <img src="${pageContext.request.contextPath}/${rel.imageUrl}" alt="${rel.name}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" onerror="this.src='${pageContext.request.contextPath}/assets/images/placeholder.jpg';">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                            <h3 style="font-size: 14px; font-weight: 500; margin: 0;">${rel.name}</h3>
+                            <span style="font-size: 11px; color: var(--clay-muted); text-transform: uppercase; letter-spacing: 1px;">$${rel.price}</span>
+                        </div>
+                    </a>
+                </c:forEach>
+            </div>
+        </section>
+    </c:if>
+</main>
 
-        <p style="font-size: 0.88rem; color: var(--clay-muted); line-height: 1.8; margin-bottom: 1.5rem;">
-            ${product.description}
-        </p>
-
-        <div style="margin-bottom: 1.5rem;">
-            <c:choose>
-                <c:when test="${product.stockQuantity > 0}">
-                    <span style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay-success);">
-                        <i class="fa-solid fa-circle-check"></i> In Stock (${product.stockQuantity} available)
-                    </span>
-                </c:when>
-                <c:otherwise>
-                    <span style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay-danger);">
-                        <i class="fa-solid fa-circle-xmark"></i> Out of Stock
-                    </span>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
-        <c:if test="${product.stockQuantity > 0}">
-            <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1rem;">
-                <input type="hidden" name="productId" value="${product.id}">
-                <div class="field" style="margin-bottom: 0; width: 80px;">
-                    <label for="quantity">Qty</label>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="${product.stockQuantity}">
-                </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 1.2rem;">
-                    <i class="fa-solid fa-bag-shopping"></i> Add to Cart
-                </button>
-            </form>
-        </c:if>
-
-        <form action="${pageContext.request.contextPath}/wishlist/add" method="post" style="display: inline;">
-            <input type="hidden" name="productId" value="${product.id}">
-            <button type="submit" class="btn btn-secondary">
-                <i class="fa-regular fa-heart"></i> Add to Wishlist
-            </button>
-        </form>
-
-        <a href="${pageContext.request.contextPath}/products" class="btn btn-secondary" style="margin-left: 0.5rem;">
-            <i class="fa-solid fa-arrow-left"></i> Back to Shop
-        </a>
+<div id="clay-toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <div class="toast-content">
+        <span class="toast-title">Success</span>
+        <span class="toast-msg">Item added to your cart.</span>
     </div>
 </div>
+
+<script>
+    const cartForm = document.getElementById('addToCartForm');
+    if (cartForm) {
+        cartForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData);
+
+            fetch('${pageContext.request.contextPath}/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: params
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message || 'Added to cart!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Fallback to normal submission if AJAX fails
+                this.submit();
+            });
+        });
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('clay-toast');
+        const msgSpan = toast.querySelector('.toast-msg');
+        msgSpan.textContent = message;
+        
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+
+    function handleDelete(productId) {
+        if (confirm('Are you sure you want to permanently delete this product?')) {
+            window.location.href = '${pageContext.request.contextPath}/admin/product/delete?id=' + productId;
+        }
+    }
+</script>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />

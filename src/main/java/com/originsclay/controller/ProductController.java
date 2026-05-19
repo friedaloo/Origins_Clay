@@ -77,7 +77,13 @@ public class ProductController extends HttpServlet {
             return;
         }
 
+        // Add related products (e.g., from the same category or featured)
+        List<Product> related = productService.findByCategory(product.getCategoryId());
+        // Remove current product from related list
+        related.removeIf(p -> p.getId() == product.getId());
+        
         request.setAttribute("product", product);
+        request.setAttribute("relatedProducts", related);
         request.getRequestDispatcher("/WEB-INF/views/pages/product-details.jsp")
                .forward(request, response);
     }
