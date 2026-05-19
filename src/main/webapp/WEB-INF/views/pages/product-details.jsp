@@ -242,7 +242,22 @@
                 color: var(--clay-muted);
             }
 
-            /* Responsive Design */
+            .related-item:hover .rel-img-wrap img {
+                transform: scale(1.05);
+            }
+
+            .related-item h3 {
+                font-size: 14px;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .related-item .rel-price {
+                font-size: 12px;
+                color: var(--clay-muted);
+            }
+
+            /* Responsive */
             @media (max-width: 1024px) {
                 .product-media, .product-details {
                     min-width: 100%;
@@ -338,6 +353,26 @@
             </a>
         </section>
     </div>
+
+    <!-- Related Products Section -->
+    <c:if test="${not empty relatedProducts}">
+        <section class="related-section" style="margin-top: 120px; border-top: 1px solid var(--clay-border); padding-top: 80px;">
+            <h2 style="font-family: var(--font-serif); font-size: 32px; margin-bottom: 50px; text-align: center;">Complete the Set</h2>
+            <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 40px;">
+                <c:forEach var="rel" items="${relatedProducts}" begin="0" end="3">
+                    <a href="${pageContext.request.contextPath}/product-details?id=${rel.id}" class="related-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 15px;">
+                        <div class="rel-img-wrap" style="width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f0f0f0;">
+                            <img src="${pageContext.request.contextPath}/${rel.imageUrl}" alt="${rel.name}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;" onerror="this.src='${pageContext.request.contextPath}/assets/images/placeholder.jpg';">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                            <h3 style="font-size: 14px; font-weight: 500; margin: 0;">${rel.name}</h3>
+                            <span style="font-size: 11px; color: var(--clay-muted); text-transform: uppercase; letter-spacing: 1px;">$${rel.price}</span>
+                        </div>
+                    </a>
+                </c:forEach>
+            </div>
+        </section>
+    </c:if>
 </main>
 
 <div id="clay-toast">

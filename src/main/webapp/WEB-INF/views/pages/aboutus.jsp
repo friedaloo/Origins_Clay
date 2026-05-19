@@ -1,82 +1,183 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <jsp:include page="/WEB-INF/components/header.jsp">
     <jsp:param name="pageTitle" value="About Us" />
+    <jsp:param name="extraCSS" value="
+        <style>
+            :root {
+                --bg-color: #fcfaf0;
+                --text-dark: #1a1a1a;
+                --text-muted: #666666;
+                --olive-green: #556b3f;
+                --border-color: #e0ddd9;
+                --font-serif: 'Cormorant Garamond', serif;
+            }
+
+            body {
+                background-color: var(--bg-color);
+                color: var(--text-dark);
+            }
+
+            .about-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 100px 40px;
+            }
+
+            .about-hero {
+                display: flex;
+                gap: 80px;
+                align-items: center;
+                margin-bottom: 120px;
+            }
+
+            .about-text {
+                flex: 1;
+            }
+
+            .about-text h1 {
+                font-family: var(--font-serif);
+                font-size: 56px;
+                font-weight: 400;
+                margin-bottom: 30px;
+            }
+
+            .about-text p {
+                font-size: 18px;
+                line-height: 1.8;
+                color: var(--text-muted);
+                margin-bottom: 25px;
+            }
+
+            .about-img {
+                flex: 1;
+            }
+
+            .about-img img {
+                width: 100%;
+                aspect-ratio: 4/5;
+                object-fit: cover;
+                box-shadow: 20px 20px 0 var(--border-color);
+            }
+
+            .values-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 40px;
+                margin-top: 100px;
+            }
+
+            .value-card {
+                padding: 40px;
+                background: white;
+                border: 1px solid var(--border-color);
+            }
+
+            .value-card h3 {
+                font-family: var(--font-serif);
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .value-card p {
+                font-size: 15px;
+                line-height: 1.6;
+                color: var(--text-muted);
+            }
+
+            .stats-bar {
+                display: flex;
+                justify-content: space-around;
+                background: var(--text-dark);
+                color: white;
+                padding: 80px 40px;
+                margin-top: 120px;
+            }
+
+            .stat-item {
+                text-align: center;
+            }
+
+            .stat-number {
+                font-family: var(--font-serif);
+                font-size: 48px;
+                margin-bottom: 10px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                opacity: 0.7;
+            }
+
+            @media (max-width: 992px) {
+                .about-hero {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                .values-grid {
+                    grid-template-columns: 1fr;
+                }
+                .stats-bar {
+                    flex-wrap: wrap;
+                    gap: 40px;
+                }
+            }
+        </style>
+    " />
 </jsp:include>
 
-<section style="text-align: center; padding: 3rem 1rem 2rem;">
-    <h1 class="page-title"><em>About</em> <strong>Origins Clay</strong></h1>
-    <p class="page-subtitle">The Story Behind Every Piece</p>
-</section>
-
-<div style="display: flex; flex-wrap: wrap; gap: 2.5rem; margin-bottom: 3rem;">
-    <div style="flex: 1; min-width: 300px;">
-        <div class="card" style="padding: 2.5rem;">
-            <h2 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 1rem;"><em>Our</em> <strong>Story</strong></h2>
-            <p style="font-size: 0.88rem; color: var(--clay-muted); line-height: 1.8; margin-bottom: 1rem;">
-                Origins Clay was born from a deep love for the ancient art of pottery. Founded in the heart of Nepal, our workshop brings together traditional techniques passed down through generations with contemporary design sensibilities.
+<main class="about-container">
+    <section class="about-hero">
+        <div class="about-text">
+            <h1>Our Story</h1>
+            <p>
+                Origins Clay was born from a deep love for the ancient art of pottery. Founded in the heart of our coastal studio, we bring together traditional techniques passed down through generations with contemporary design sensibilities.
             </p>
-            <p style="font-size: 0.88rem; color: var(--clay-muted); line-height: 1.8; margin-bottom: 1rem;">
+            <p>
                 Every piece that leaves our studio is shaped by hand on the potter's wheel, carefully glazed, and fired in our kiln. We believe that everyday objects should be beautiful, functional, and tell a story.
             </p>
-            <p style="font-size: 0.88rem; color: var(--clay-muted); line-height: 1.8;">
-                From our hands to your home — each creation carries the warmth of human touch and the spirit of craftsmanship.
-            </p>
         </div>
-    </div>
-
-    <div style="flex: 1; min-width: 300px;">
-        <div class="card" style="padding: 2.5rem;">
-            <h2 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 1rem;"><em>Our</em> <strong>Values</strong></h2>
-
-            <div style="margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem;">
-                    <i class="fa-solid fa-gem" style="color: var(--clay-olive); margin-right: 0.5rem;"></i>Quality First
-                </h3>
-                <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">
-                    We never compromise on materials or process. Each piece undergoes careful inspection before it reaches you.
-                </p>
-            </div>
-
-            <div style="margin-bottom: 1.5rem;">
-                <h3 style="font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem;">
-                    <i class="fa-solid fa-seedling" style="color: var(--clay-olive); margin-right: 0.5rem;"></i>Sustainability
-                </h3>
-                <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">
-                    We source our clay locally and use non-toxic, food-safe glazes. Our packaging is made from recycled materials.
-                </p>
-            </div>
-
-            <div>
-                <h3 style="font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem;">
-                    <i class="fa-solid fa-people-group" style="color: var(--clay-olive); margin-right: 0.5rem;"></i>Community
-                </h3>
-                <p style="font-size: 0.82rem; color: var(--clay-muted); line-height: 1.6;">
-                    We work closely with local artisans, providing fair wages and supporting traditional craft communities.
-                </p>
-            </div>
+        <div class="about-img">
+            <img src="${pageContext.request.contextPath}/assets/images/Picture6.jpg" alt="Pottery Studio" onerror="this.src='https://placehold.co/800x1000?text=Our+Story'">
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- ====== STATS ====== -->
-<div class="grid-4" style="margin-bottom: 3rem;">
-    <div class="card" style="text-align: center; padding: 2rem;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-olive);">500+</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Pieces Crafted</div>
-    </div>
-    <div class="card" style="text-align: center; padding: 2rem;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-olive);">12</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Artisans</div>
-    </div>
-    <div class="card" style="text-align: center; padding: 2rem;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-olive);">5</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Years Running</div>
-    </div>
-    <div class="card" style="text-align: center; padding: 2rem;">
-        <div style="font-family: var(--font-serif); font-size: 2.4rem; font-weight: 600; color: var(--clay-olive);">100%</div>
-        <div style="font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted); margin-top: 0.3rem;">Handmade</div>
-    </div>
-</div>
+    <section class="values-grid">
+        <div class="value-card">
+            <h3>Quality First</h3>
+            <p>We never compromise on materials or process. Each piece undergoes careful inspection before it reaches you.</p>
+        </div>
+        <div class="value-card">
+            <h3>Sustainability</h3>
+            <p>We source our clay locally and use non-toxic, food-safe glazes. Our packaging is made from recycled materials.</p>
+        </div>
+        <div class="value-card">
+            <h3>Community</h3>
+            <p>We work closely with local artisans, providing fair wages and supporting traditional craft communities.</p>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Pieces Crafted</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">Artisans</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Years Running</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Handmade</div>
+        </div>
+    </section>
+</main>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />
