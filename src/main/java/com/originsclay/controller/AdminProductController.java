@@ -14,7 +14,8 @@ import java.math.BigDecimal;
 import java.util.List;
 @WebServlet(name = "AdminProductController",
         urlPatterns = {"/admin/products", "/admin/product/add",
-                       "/admin/product/edit", "/admin/product/delete"})
+                       "/admin/product/edit", "/admin/product/delete"},
+        asyncSupported = true)
 public class AdminProductController extends HttpServlet {
 
     private final ProductService  productService  = new ProductService();

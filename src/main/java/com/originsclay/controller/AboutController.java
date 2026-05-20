@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "AboutController", urlPatterns = "/about")
+@WebServlet(name = "AboutController", urlPatterns = "/about", asyncSupported = true)
 public class AboutController extends HttpServlet {
 
     @Override

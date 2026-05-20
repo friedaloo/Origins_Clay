@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * HomeController - Landing page showing featured products.
  */
-@WebServlet(name = "HomeController", urlPatterns = {"", "/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"", "/home"}, asyncSupported = true)
 public class HomeController extends HttpServlet {
 
     private final ProductService productService = new ProductService();

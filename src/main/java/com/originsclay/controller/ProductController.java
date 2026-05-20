@@ -17,7 +17,7 @@ import java.util.List;
  * ProductController - Browse & search products (public).
  * Satisfies rubric 3d "Search feature".
  */
-@WebServlet(name = "ProductController", urlPatterns = {"/products", "/product-details"})
+@WebServlet(name = "ProductController", urlPatterns = {"/products", "/product-details"}, asyncSupported = true)
 public class ProductController extends HttpServlet {
 
     private final ProductService  productService  = new ProductService();

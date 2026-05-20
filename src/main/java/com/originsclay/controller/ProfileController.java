@@ -18,7 +18,8 @@ import java.io.IOException;
  */
 @WebServlet(name = "ProfileController",
         urlPatterns = {"/account/profile", "/account/edit-profile",
-                       "/account/change-password"})
+                       "/account/change-password"},
+        asyncSupported = true)
 public class ProfileController extends HttpServlet {
 
     private final UserService userService = new UserService();

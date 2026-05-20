@@ -14,7 +14,8 @@ import java.util.List;
 
 @WebServlet(name = "AdminUserController",
         urlPatterns = {"/admin/users", "/admin/user/approve",
-                       "/admin/user/reject", "/admin/user/delete"})
+                       "/admin/user/reject", "/admin/user/delete"},
+        asyncSupported = true)
 public class AdminUserController extends HttpServlet {
 
     private final UserService userService = new UserService();

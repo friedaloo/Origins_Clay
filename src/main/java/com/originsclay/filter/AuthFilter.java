@@ -13,7 +13,7 @@ import java.io.IOException;
  * enforces role-based access (admin vs customer).
  * Satisfies rubric 4d "Redirect Management (Filter)".
  */
-@WebFilter(urlPatterns = {"/account/*", "/admin/*", "/cart/*", "/wishlist/*", "/orders/*"})
+@WebFilter(urlPatterns = {"/account/*", "/admin/*", "/cart/*", "/wishlist/*", "/orders/*"}, asyncSupported = true)
 public class AuthFilter implements Filter {
 
     @Override

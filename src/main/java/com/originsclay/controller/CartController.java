@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CartController",
-        urlPatterns = {"/cart", "/cart/add", "/cart/update", "/cart/remove", "/cart/checkout"})
+        urlPatterns = {"/cart", "/cart/add", "/cart/update", "/cart/remove", "/cart/checkout"},
+        asyncSupported = true)
 public class CartController extends HttpServlet {
 
     private final ProductService productService = new ProductService();

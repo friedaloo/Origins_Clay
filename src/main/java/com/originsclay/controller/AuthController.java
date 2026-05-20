@@ -17,7 +17,7 @@ import java.io.IOException;
  * AuthController - Handles login, register, and logout.
  * Satisfies rubric 3a/3b, 4c (session + cookies).
  */
-@WebServlet(name = "AuthController", urlPatterns = {"/login", "/register", "/logout"})
+@WebServlet(name = "AuthController", urlPatterns = {"/login", "/register", "/logout"}, asyncSupported = true)
 public class AuthController extends HttpServlet {
 
     private final UserService userService = new UserService();

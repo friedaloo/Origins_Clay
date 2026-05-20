@@ -9,7 +9,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-@WebServlet(name = "AdminDashboardController", urlPatterns = "/admin/dashboard")
+
+@WebServlet(name = "AdminDashboardController", urlPatterns = "/admin/dashboard", asyncSupported = true)
 public class AdminDashboardController extends HttpServlet {
 
     private final UserService    userService    = new UserService();

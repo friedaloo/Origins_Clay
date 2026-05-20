@@ -10,7 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 @WebServlet(name = "AdminOrderController",
-        urlPatterns = {"/admin/orders", "/admin/order/view", "/admin/order/update-status"})
+        urlPatterns = {"/admin/orders", "/admin/order/view", "/admin/order/update-status"},
+        asyncSupported = true)
 public class AdminOrderController extends HttpServlet {
 
     private final OrderService orderService = new OrderService();

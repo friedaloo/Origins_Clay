@@ -18,7 +18,8 @@ import java.util.List;
  * Satisfies rubric 3c "Access to issued orders/records".
  */
 @WebServlet(name = "OrderController",
-        urlPatterns = {"/account/orders", "/account/order-details"})
+        urlPatterns = {"/account/orders", "/account/order-details"},
+        asyncSupported = true)
 public class OrderController extends HttpServlet {
 
     private final OrderService orderService = new OrderService();

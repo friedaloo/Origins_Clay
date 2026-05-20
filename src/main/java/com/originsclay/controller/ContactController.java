@@ -12,7 +12,7 @@ import java.io.IOException;
  * ContactController - Serves the Contact page and handles form submission.
  * Satisfies rubric 7b.
  */
-@WebServlet(name = "ContactController", urlPatterns = "/contact")
+@WebServlet(name = "ContactController", urlPatterns = "/contact", asyncSupported = true)
 public class ContactController extends HttpServlet {
 
     @Override
