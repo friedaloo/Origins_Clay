@@ -6,52 +6,45 @@ import com.originsclay.util.PasswordUtil;
 
 import java.util.List;
 
-/**
- * UserService - Business logic for user registration, authentication, and management.
- */
 public class UserService {
 
     private final UserDAO userDAO = new UserDAO();
 
-    /**
-     * Register a new customer. Password is hashed before storage.
-     * New accounts require admin approval.
-     */
     public String register(User user) {
-        // Check duplicate email
+        if (userDAO.findByUsername(user.getUsername()) != null) {
+            return "Username is already taken.";
+        }
         if (userDAO.findByEmail(user.getEmail()) != null) {
             return "Email is already registered.";
         }
 
-        // Hash password
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
-        user.setRole("Customer");
-        user.setStatus("Pending");  // admin must approve
+        user.setRole("Customer"); 
+        user.setstatus(false);    
 
         boolean success = userDAO.insertUser(user);
         return success ? null : "Registration failed. Please try again.";
     }
+    
 
-    /**
-     * Authenticate a user by email and password.
-     * Returns the User if valid, or null if credentials are wrong / account not approved.
-     */
     public User authenticate(String email, String password) {
         User user = userDAO.findByEmail(email);
         if (user == null) return null;
-        if (!PasswordUtil.verifyPassword(password, user.getPassword())) return null;
-        if (!"Active".equalsIgnoreCase(user.getStatus())) return null;
+        
+        if (!PasswordUtil.verifyPassword(password, user.getPassword())) {
+            return null;
+        }
+        
         return user;
     }
 
-    /**
-     * Returns null if credentials match but account is pending approval (for UI message).
-     */
     public boolean isPendingApproval(String email, String password) {
         User user = userDAO.findByEmail(email);
         if (user == null) return false;
         if (!PasswordUtil.verifyPassword(password, user.getPassword())) return false;
-        return "Pending".equalsIgnoreCase(user.getStatus());
+        
+        // Return true if status is false (meaning it is still pending admin activation)
+        return !user.isstatus();
     }
 
     public User findById(int id) {
@@ -86,11 +79,11 @@ public class UserService {
     }
 
     public boolean approveUser(int userId) {
-        return userDAO.updateStatus(userId, "Active");
+        return userDAO.setstatus(userId, true);
     }
 
     public boolean rejectUser(int userId) {
-        return userDAO.updateStatus(userId, "Pending");
+        return userDAO.setstatus(userId, false);
     }
 
     public boolean deleteUser(int userId) {

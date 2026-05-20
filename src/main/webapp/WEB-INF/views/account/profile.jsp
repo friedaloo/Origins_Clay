@@ -28,7 +28,7 @@
                 <div>
                     <h2 style="font-family: var(--font-serif); font-size: 1.5rem;">${user.fullName}</h2>
                     <div style="font-size: 0.8rem; color: var(--clay-muted); margin-bottom: 4px;">@${user.username}</div>
-                    <span style="font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted);">${user.role} · ${user.status}</span>
+                    <span style="font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted);">${user.role} · ${user.status ? 'Active' : 'Pending'}</span>
                 </div>
             </div>
 

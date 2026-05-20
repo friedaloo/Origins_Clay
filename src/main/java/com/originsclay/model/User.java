@@ -1,49 +1,41 @@
 package com.originsclay.model;
 
-import java.sql.Timestamp;
-
-/**
- * User model - represents a registered user (customer or admin).
- */
 public class User {
 
     private int id;
-    private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
-    private String password;          // hashed
-    private String role;              // "Admin" | "Customer"
-    private String status;            // "Pending" | "Active"
-    private byte[] image;             // profile picture
-
+    private String password;  // hashed
+    private String role;    // "customer" | "admin"
+    private boolean status;     // admin must approve new accounts
+    private String username;
+    private byte[] image; // Changed to byte[]
+    
     public User() {}
 
-    public User(int id, String username, String firstName, String lastName, String email,
-                String phone, String address, String password,
-                String role, String status, byte[] image) {
-        this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.password = password;
-        this.role = role;
-        this.status = status;
-        this.image = image;
-    }
+    public User(int id, String firstName, String lastName, String username, String email,
+            String phone, String address, String password, String role, 
+            boolean status, byte[] image) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = username; 
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
+    this.password = password;
+    this.role = role;
+    this.status = status;
+    this.image = image;       
+}
 
     // ---------- Getters & Setters ----------
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -66,11 +58,30 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public byte[] getImage() { return image; }
-    public void setImage(byte[] image) { this.image = image; }
+    public boolean isstatus() {
+    	return status; }
+    public void setApproved(boolean status) { this.status = status; }
 
     public String getFullName() { return firstName + " " + lastName; }
+
+	public void setstatus(boolean status) {
+		this.status = status;
+		
+	}
+	
+	public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

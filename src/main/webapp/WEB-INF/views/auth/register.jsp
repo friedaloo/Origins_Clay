@@ -142,7 +142,7 @@
         <div class="error-msg">${error}</div>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/register" method="post">
+    <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data">
         <div class="field">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Choose a unique handle" required>
@@ -172,6 +172,11 @@
         <div class="field">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" placeholder="City, Country">
+        </div>
+
+        <div class="field">
+            <label for="image">Profile Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
         </div>
 
         <div class="field">

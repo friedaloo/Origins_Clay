@@ -6,18 +6,25 @@ import com.originsclay.util.CookieUtil;
 import com.originsclay.util.SessionUtil;
 import com.originsclay.util.ValidationUtil;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig; 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part; 
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * AuthController - Handles login, register, and logout.
  * Satisfies rubric 3a/3b, 4c (session + cookies).
  */
 @WebServlet(name = "AuthController", urlPatterns = {"/login", "/register", "/logout"}, asyncSupported = true)
+@MultipartConfig(
+    maxFileSize = 1024 * 1024 * 5,      // Max file size: 5MB
+    maxRequestSize = 1024 * 1024 * 10   // Max request total: 10MB
+)
 public class AuthController extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -77,10 +84,15 @@ public class AuthController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
 
-        if (ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "Please fill in all fields.");
-            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
-                   .forward(request, response);
+        if (ValidationUtil.isNullOrEmpty(email)) {
+            request.setAttribute("error", "EMAIL parameter is empty!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
+            return;
+        }
+
+        if (ValidationUtil.isNullOrEmpty(password)) {
+            request.setAttribute("error", "PASSWORD parameter is empty!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
 
@@ -101,6 +113,14 @@ public class AuthController extends HttpServlet {
             return;
         }
 
+        // Additional safety check for status if needed (redundant if authenticate is updated, but w11 has it)
+        if (!user.isstatus()) {
+            request.setAttribute("error", "Your account is not activated.");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
+                   .forward(request, response);
+            return;
+        }
+
         // Set session
         SessionUtil.setLoggedInUser(request, user);
 
@@ -112,7 +132,7 @@ public class AuthController extends HttpServlet {
         }
 
         // Redirect based on role
-        if ("admin".equals(user.getRole())) {
+        if ("admin".equalsIgnoreCase(user.getRole())) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
         } else {
             response.sendRedirect(request.getContextPath() + "/home");
@@ -124,9 +144,9 @@ public class AuthController extends HttpServlet {
     private void handleRegister(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username        = request.getParameter("username");
         String firstName       = request.getParameter("firstName");
         String lastName        = request.getParameter("lastName");
+        String username        = request.getParameter("username"); 
         String email           = request.getParameter("email");
         String phone           = request.getParameter("phone");
         String address         = request.getParameter("address");
@@ -134,12 +154,29 @@ public class AuthController extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         // Validation
-        if (ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(firstName) 
-                || ValidationUtil.isNullOrEmpty(lastName) || ValidationUtil.isNullOrEmpty(email) 
-                || ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "Please fill in all required fields.");
-            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp")
-                   .forward(request, response);
+        if (ValidationUtil.isNullOrEmpty(firstName)) {
+            request.setAttribute("error", "'firstName' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(lastName)) {
+            request.setAttribute("error", "'lastName' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(username)) {
+            request.setAttribute("error", "'username' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(email)) {
+            request.setAttribute("error", "'email' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(password)) {
+            request.setAttribute("error", "'password' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
 
@@ -166,14 +203,28 @@ public class AuthController extends HttpServlet {
             return;
         }
 
+        // Handle Image Upload
+        byte[] imageBytes = null;
+        try {
+            Part filePart = request.getPart("image");
+            if (filePart != null && filePart.getSize() > 0) {
+                try (InputStream is = filePart.getInputStream()) {
+                    imageBytes = is.readAllBytes();
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("IMAGE UPLOAD ERROR: " + e.getMessage());
+        }
+
         User user = new User();
-        user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setUsername(username);
         user.setEmail(email);
         user.setPhone(phone);
         user.setAddress(address);
         user.setPassword(password); // service will hash it
+        user.setImage(imageBytes);
 
         String errorMsg = userService.register(user);
 

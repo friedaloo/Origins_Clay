@@ -159,6 +159,9 @@
 </head>
 <body>
 <div class="card">
+    <h2 class="heading" style="text-align:center; font-family: 'Cormorant Garamond', serif; margin-bottom: 0.5rem;">Welcome</h2>
+    <p class="subheading" style="text-align:center; font-size: 0.75rem; color: #7a7268; margin-bottom: 2rem;">Sign in to your account</p>
+
     <c:if test="${not empty error}">
         <div class="error-msg">${error}</div>
     </c:if>

@@ -39,21 +39,21 @@
                     <c:choose>
                         <c:when test="${not empty users}">
                             <c:forEach var="u" items="${users}">
-                                <tr class="${u.status == 'Pending' ? 'row-pending' : ''}">
+                                <tr class="${!u.status ? 'row-pending' : ''}">
                                     <td>${u.id}</td>
                                     <td>${u.username}</td>
                                     <td>${u.fullName}</td>
                                     <td>${u.email}</td>
                                     <td>${u.role}</td>
-                                    <td>${u.status}</td>
+                                    <td>${u.status ? 'Active' : 'Pending'}</td>
                                     <td>
-                                        <c:if test="${u.status == 'Pending'}">
+                                        <c:if test="${!u.status}">
                                             <form action="${pageContext.request.contextPath}/admin/user/approve" method="post" style="display:inline;">
                                                 <input type="hidden" name="id" value="${u.id}">
                                                 <button type="submit" class="action-btn">Activate</button>
                                             </form>
                                         </c:if>
-                                        <c:if test="${u.status == 'Active'}">
+                                        <c:if test="${u.status}">
                                             <form action="${pageContext.request.contextPath}/admin/user/reject" method="post" style="display:inline;">
                                                 <input type="hidden" name="id" value="${u.id}">
                                                 <button type="submit" class="action-btn">Deactivate</button>

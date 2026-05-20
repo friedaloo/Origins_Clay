@@ -8,34 +8,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UserDAO - CRUD operations for the users table.
+ * UserDAO CRUD operations for the users table.
  */
 public class UserDAO {
 
     // ---------- CREATE ----------
 
     public boolean insertUser(User user) {
-        String sql = "INSERT INTO users (username, first_name, last_name, email, phone, address, password, role, status, image) " +
+        String sql = "INSERT INTO users (first_name, last_name, username, email, phone, address, password, role, status, image) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getUsername()); 
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPhone());
             ps.setString(6, user.getAddress());
             ps.setString(7, user.getPassword());
-            ps.setString(8, user.getRole());
-            ps.setString(9, user.getStatus());
-            ps.setBytes(10, user.getImage());
+            ps.setString(8, user.getRole());      
+            ps.setString(9, user.isstatus() ? "Active" : "Pending");  
+            ps.setBytes(10, user.getImage());  
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
+            System.err.println("INSERT FAILED: " + e.getMessage());
             e.printStackTrace();
             return false;
-        }
+        }  
     }
 
     // ---------- READ ----------
@@ -61,6 +62,21 @@ public class UserDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User findByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return mapRow(rs);
             }
@@ -115,17 +131,16 @@ public class UserDAO {
     // ---------- UPDATE ----------
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE users SET username=?, first_name=?, last_name=?, email=?, phone=?, address=? WHERE id=?";
+        String sql = "UPDATE users SET first_name=?, last_name=?, email=?, phone=?, address=? WHERE id=?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPhone());
-            ps.setString(6, user.getAddress());
-            ps.setInt(7, user.getId());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getAddress());
+            ps.setInt(6, user.getId());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -149,12 +164,12 @@ public class UserDAO {
         }
     }
 
-    public boolean updateStatus(int userId, String status) {
+    public boolean setstatus(int userId, boolean status) {
         String sql = "UPDATE users SET status = ? WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, status);
+        	ps.setString(1, status ? "Active" : "Pending");
             ps.setInt(2, userId);
             return ps.executeUpdate() > 0;
 
@@ -200,15 +215,15 @@ public class UserDAO {
     private User mapRow(ResultSet rs) throws SQLException {
         User u = new User();
         u.setId(rs.getInt("id"));
-        u.setUsername(rs.getString("username"));
         u.setFirstName(rs.getString("first_name"));
         u.setLastName(rs.getString("last_name"));
+        u.setUsername(rs.getString("username"));
         u.setEmail(rs.getString("email"));
         u.setPhone(rs.getString("phone"));
         u.setAddress(rs.getString("address"));
         u.setPassword(rs.getString("password"));
         u.setRole(rs.getString("role"));
-        u.setStatus(rs.getString("status"));
+        u.setstatus("Active".equalsIgnoreCase(rs.getString("status")));
         u.setImage(rs.getBytes("image"));
         return u;
     }
