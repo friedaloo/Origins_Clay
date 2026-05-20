@@ -16,10 +16,7 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * AuthController - Handles login, register, and logout.
- * Satisfies rubric 3a/3b, 4c (session + cookies).
- */
+
 @WebServlet(name = "AuthController", urlPatterns = {"/login", "/register", "/logout"}, asyncSupported = true)
 @MultipartConfig(
     maxFileSize = 1024 * 1024 * 5,      // Max file size: 5MB

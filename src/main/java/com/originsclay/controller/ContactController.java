@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * ContactController - Serves the Contact page and handles form submission.
- * Satisfies rubric 7b.
- */
+
 @WebServlet(name = "ContactController", urlPatterns = "/contact", asyncSupported = true)
 public class ContactController extends HttpServlet {
 
@@ -32,8 +29,7 @@ public class ContactController extends HttpServlet {
         String subject = request.getParameter("subject");
         String message = request.getParameter("message");
 
-        // In a real application this would send an email or persist the message.
-        // For now we just confirm receipt.
+
         request.setAttribute("successMessage",
                 "Thank you, " + name + "! Your message has been received. We'll get back to you soon.");
 

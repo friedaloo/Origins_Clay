@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * OrderController - Customer order history and details.
- * Satisfies rubric 3c "Access to issued orders/records".
- */
+
 @WebServlet(name = "OrderController",
         urlPatterns = {"/account/orders", "/account/order-details"},
         asyncSupported = true)
