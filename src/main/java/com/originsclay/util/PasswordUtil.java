@@ -2,10 +2,7 @@ package com.originsclay.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- * PasswordUtil - BCrypt-based password hashing and verification.
- * Satisfies rubric 4c / MS1P3 "Encryption program".
- */
+
 public class PasswordUtil {
 
     private static final int LOG_ROUNDS = 12;
