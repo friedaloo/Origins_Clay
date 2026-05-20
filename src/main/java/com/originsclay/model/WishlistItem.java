@@ -2,9 +2,7 @@ package com.originsclay.model;
 
 import java.math.BigDecimal;
 
-/**
- * WishlistItem model - session-based wishlist entry.
- */
+
 public class WishlistItem {
 
     private int productId;

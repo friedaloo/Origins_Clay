@@ -7,18 +7,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * OrderService - Business logic for order processing.
- */
+
 public class OrderService {
 
     private final OrderDAO orderDAO = new OrderDAO();
     private final ProductService productService = new ProductService();
 
-    /**
-     * Places an order from the shopping cart.
-     * Converts CartItems to OrderItems, calculates the total, and reduces stock.
-     */
+
     public boolean placeOrder(int userId, List<CartItem> cartItems, String shippingAddress) {
         if (cartItems == null || cartItems.isEmpty()) return false;
 

@@ -2,9 +2,7 @@ package com.originsclay.model;
 
 import java.math.BigDecimal;
 
-/**
- * CartItem model - session-based shopping cart entry.
- */
+
 public class CartItem {
 
     private int productId;

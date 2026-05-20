@@ -12,10 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * ProfileController - Customer account management.
- * Satisfies rubric 3a (view/update personal info, change password).
- */
+
 @WebServlet(name = "ProfileController",
         urlPatterns = {"/account/profile", "/account/edit-profile",
                        "/account/change-password"})

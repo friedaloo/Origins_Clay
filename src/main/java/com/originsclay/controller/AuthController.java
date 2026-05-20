@@ -6,18 +6,21 @@ import com.originsclay.util.CookieUtil;
 import com.originsclay.util.SessionUtil;
 import com.originsclay.util.ValidationUtil;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig; 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part; 
 
 import java.io.IOException;
+import java.io.InputStream;
 
-/**
- * AuthController - Handles login, register, and logout.
- * Satisfies rubric 3a/3b, 4c (session + cookies).
- */
-@WebServlet(name = "AuthController", urlPatterns = {"/login", "/register", "/logout"})
+@WebServlet(name = "AuthController", asyncSupported = true, urlPatterns = {"/login", "/register", "/logout"})
+@MultipartConfig(
+    maxFileSize = 1024 * 1024 * 5,      // Max file size: 5MB
+    maxRequestSize = 1024 * 1024 * 10   // Max request total: 10MB
+)
 public class AuthController extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -30,7 +33,6 @@ public class AuthController extends HttpServlet {
 
         switch (uri) {
             case "/login":
-                // Pre-fill email from cookie if available
                 String savedEmail = CookieUtil.getCookieValue(request, "rememberedEmail");
                 if (savedEmail != null) {
                     request.setAttribute("rememberedEmail", savedEmail);
@@ -77,14 +79,18 @@ public class AuthController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
 
-        if (ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "Please fill in all fields.");
-            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
-                   .forward(request, response);
+        if (ValidationUtil.isNullOrEmpty(email)) {
+            request.setAttribute("error", "DEBUG TRACE: The server thinks EMAIL parameter is empty!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
 
-        // Check if pending approval
+        if (ValidationUtil.isNullOrEmpty(password)) {
+            request.setAttribute("error", "DEBUG TRACE: The server thinks PASSWORD parameter is empty!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
+            return;
+        }
+
         if (userService.isPendingApproval(email, password)) {
             request.setAttribute("error", "Your account is pending admin approval. Please try again later.");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
@@ -101,17 +107,21 @@ public class AuthController extends HttpServlet {
             return;
         }
 
-        // Set session
+        if (!user.isstatus()) {
+            request.setAttribute("error", "Your account is not activated.");
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
+                   .forward(request, response);
+            return;
+        }
+        
         SessionUtil.setLoggedInUser(request, user);
 
-        // Remember-me cookie
         if ("on".equals(remember)) {
             CookieUtil.addCookie(response, "rememberedEmail", email);
         } else {
             CookieUtil.deleteCookie(response, "rememberedEmail");
         }
 
-        // Redirect based on role
         if ("admin".equals(user.getRole())) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
         } else {
@@ -126,18 +136,49 @@ public class AuthController extends HttpServlet {
 
         String firstName       = request.getParameter("firstName");
         String lastName        = request.getParameter("lastName");
+        String username        = request.getParameter("username"); 
         String email           = request.getParameter("email");
         String phone           = request.getParameter("phone");
         String address         = request.getParameter("address");
         String password        = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // Validation
+        /* MULTILINE COMMENT APPLIED HERE:
+           Disabling the old combined registration check to locate the exact drop field.
         if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-                || ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(password)) {
+                || ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(email) 
+                || ValidationUtil.isNullOrEmpty(password)) {
             request.setAttribute("error", "Please fill in all required fields.");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp")
                    .forward(request, response);
+            return;
+        }
+        */
+
+        // NEW INDIVIDUAL REGISTRATION DEBUG TRACERS:
+        if (ValidationUtil.isNullOrEmpty(firstName)) {
+            request.setAttribute("error", "DEBUG TRACE: Server thinks 'firstName' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(lastName)) {
+            request.setAttribute("error", "DEBUG TRACE: Server thinks 'lastName' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(username)) {
+            request.setAttribute("error", "DEBUG TRACE: Server thinks 'username' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(email)) {
+            request.setAttribute("error", "DEBUG TRACE: Server thinks 'email' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
+            return;
+        }
+        if (ValidationUtil.isNullOrEmpty(password)) {
+            request.setAttribute("error", "DEBUG TRACE: Server thinks 'password' is missing!");
+            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
 
@@ -164,13 +205,27 @@ public class AuthController extends HttpServlet {
             return;
         }
 
+        byte[] imageBytes = null;
+        try {
+            Part filePart = request.getPart("image");
+            if (filePart != null && filePart.getSize() > 0) {
+                try (InputStream is = filePart.getInputStream()) {
+                    imageBytes = is.readAllBytes();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setUsername(username); 
         user.setEmail(email);
         user.setPhone(phone);
         user.setAddress(address);
-        user.setPassword(password); // service will hash it
+        user.setPassword(password); 
+        user.setImage(imageBytes);   
 
         String errorMsg = userService.register(user);
 

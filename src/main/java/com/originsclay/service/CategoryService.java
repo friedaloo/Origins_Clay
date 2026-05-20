@@ -5,9 +5,7 @@ import com.originsclay.model.Category;
 
 import java.util.List;
 
-/**
- * CategoryService - Business logic for product categories.
- */
+
 public class CategoryService {
 
     private final CategoryDAO categoryDAO = new CategoryDAO();

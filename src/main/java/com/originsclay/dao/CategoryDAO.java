@@ -7,9 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * CategoryDAO - CRUD operations for the categories table.
- */
 public class CategoryDAO {
 
     // ---------- CREATE ----------

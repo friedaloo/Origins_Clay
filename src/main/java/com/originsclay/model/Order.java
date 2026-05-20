@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
-/**
- * Order model - represents a customer purchase.
- */
+
 public class Order {
 
     private int id;

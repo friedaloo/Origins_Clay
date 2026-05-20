@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * AdminReportController - Generates reports and analytics.
- * Satisfies rubric 2d "Generate reports / Sales vs availability analytics".
- */
+
 @WebServlet(name = "AdminReportController", urlPatterns = "/admin/reports")
 public class AdminReportController extends HttpServlet {
 

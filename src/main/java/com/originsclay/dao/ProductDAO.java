@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ProductDAO - CRUD operations for the products table.
+ * ProductDAO CRUD operations for the products table.
  */
 public class ProductDAO {
 

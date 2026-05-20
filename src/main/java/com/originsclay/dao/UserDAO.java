@@ -8,26 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * UserDAO - CRUD operations for the users table.
+ * UserDAO CRUD operations for the users table.
  */
 public class UserDAO {
 
     // ---------- CREATE ----------
 
     public boolean insertUser(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, email, phone, address, password, role, status) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (first_name, last_name, username, email, phone, address, password, role, status, image) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getAddress());
-            ps.setString(6, user.getPassword());
-            ps.setString(7, user.getRole());
-            ps.setBoolean(8, user.isApproved());
+            ps.setString(3, user.getUsername()); 
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getAddress());
+            ps.setString(7, user.getPassword());
+            ps.setString(8, user.getRole());
+            ps.setBoolean(9, user.isstatus());
+            ps.setBytes(10, user.getImage());  
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -68,9 +70,26 @@ public class UserDAO {
         return null;
     }
 
+   
+    public User findByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users ORDER BY created_at DESC";
+        // FIXED: Replaced column dependency 'created_at' with 'id'
+        String sql = "SELECT * FROM users ORDER BY id DESC";
         try (Connection conn = DBUtil.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -84,7 +103,7 @@ public class UserDAO {
 
     public List<User> findByRole(String role) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users WHERE role = ? ORDER BY created_at DESC";
+        String sql = "SELECT * FROM users WHERE role = ? ORDER BY id DESC";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -146,12 +165,12 @@ public class UserDAO {
         }
     }
 
-    public boolean setApproval(int userId, boolean approved) {
-        String sql = "UPDATE users SET approved = ? WHERE id = ?";
+    public boolean setstatus(int userId, boolean status) {
+        String sql = "UPDATE users SET status = ? WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setBoolean(1, approved);
+            ps.setBoolean(1, status);
             ps.setInt(2, userId);
             return ps.executeUpdate() > 0;
 
@@ -184,13 +203,14 @@ public class UserDAO {
         u.setId(rs.getInt("id"));
         u.setFirstName(rs.getString("first_name"));
         u.setLastName(rs.getString("last_name"));
+        u.setUsername(rs.getString("username")); 
         u.setEmail(rs.getString("email"));
         u.setPhone(rs.getString("phone"));
         u.setAddress(rs.getString("address"));
         u.setPassword(rs.getString("password"));
         u.setRole(rs.getString("role"));
-        u.setApproved(rs.getBoolean("approved"));
-        u.setCreatedAt(rs.getTimestamp("created_at"));
+        u.setstatus(rs.getInt("status") == 1);
+        u.setImage(rs.getBytes("image"));       
         return u;
     }
 }

@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * ContactController - Serves the Contact page and handles form submission.
- * Satisfies rubric 7b.
- */
+
 @WebServlet(name = "ContactController", urlPatterns = "/contact")
 public class ContactController extends HttpServlet {
 

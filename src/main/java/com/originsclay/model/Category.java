@@ -1,8 +1,6 @@
 package com.originsclay.model;
 
-/**
- * Category model - groups products (e.g. Vases, Bowls, Mugs).
- */
+
 public class Category {
 
     private int id;

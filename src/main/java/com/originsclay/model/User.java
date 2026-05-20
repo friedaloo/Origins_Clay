@@ -1,10 +1,5 @@
 package com.originsclay.model;
 
-import java.sql.Timestamp;
-
-/**
- * User model - represents a registered user (customer or admin).
- */
 public class User {
 
     private int id;
@@ -13,27 +8,29 @@ public class User {
     private String email;
     private String phone;
     private String address;
-    private String password;          // hashed
-    private String role;              // "customer" | "admin"
-    private boolean approved;         // admin must approve new accounts
-    private Timestamp createdAt;
-
+    private String password;  // hashed
+    private String role;    // "customer" | "admin"
+    private boolean status;     // admin must approve new accounts
+    private String username;
+    private byte[] image; // Changed to byte[]
+    
     public User() {}
 
-    public User(int id, String firstName, String lastName, String email,
-                String phone, String address, String password,
-                String role, boolean approved, Timestamp createdAt) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.password = password;
-        this.role = role;
-        this.approved = approved;
-        this.createdAt = createdAt;
-    }
+    public User(int id, String firstName, String lastName, String username, String email,
+            String phone, String address, String password, String role, 
+            boolean status, byte[] image) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = username; 
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
+    this.password = password;
+    this.role = role;
+    this.status = status;
+    this.image = image;       
+}
 
     // ---------- Getters & Setters ----------
 
@@ -61,11 +58,31 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public boolean isApproved() { return approved; }
-    public void setApproved(boolean approved) { this.approved = approved; }
-
-    public Timestamp getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+    public boolean isstatus() {
+    	System.out.println("Status: "+status);
+    	return status; }
+    public void setApproved(boolean status) { this.status = status; }
 
     public String getFullName() { return firstName + " " + lastName; }
+
+	public void setstatus(boolean status) {
+		this.status = status;
+		
+	}
+	
+	public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

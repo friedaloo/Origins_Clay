@@ -12,10 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-/**
- * AdminDashboardController - Main admin hub with summary stats.
- * Satisfies rubric 2 "Admin Dashboard".
- */
+
 @WebServlet(name = "AdminDashboardController", urlPatterns = "/admin/dashboard")
 public class AdminDashboardController extends HttpServlet {
 

@@ -9,16 +9,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * OrderDAO - CRUD operations for orders and order_items tables.
- */
+
 public class OrderDAO {
 
     // ---------- CREATE ----------
 
-    /**
-     * Creates an order and its items in a single transaction.
-     */
+ 
     public boolean createOrder(Order order) {
         String orderSql = "INSERT INTO orders (user_id, total_amount, status, shipping_address) VALUES (?, ?, ?, ?)";
         String itemSql  = "INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)";

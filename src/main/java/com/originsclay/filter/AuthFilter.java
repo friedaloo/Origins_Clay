@@ -8,11 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * AuthFilter - Blocks unauthenticated access to protected URLs and
- * enforces role-based access (admin vs customer).
- * Satisfies rubric 4d "Redirect Management (Filter)".
- */
 @WebFilter(urlPatterns = {"/account/*", "/admin/*", "/cart/*", "/wishlist/*", "/orders/*"})
 public class AuthFilter implements Filter {
 

@@ -4,18 +4,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- * CookieUtil - Helpers for reading, creating, and deleting cookies.
- * Satisfies rubric MS1P3 "Cookies handling".
- */
+
 public class CookieUtil {
 
     /** Default cookie max-age: 7 days */
     private static final int DEFAULT_MAX_AGE = 7 * 24 * 60 * 60;
 
-    /**
-     * Creates a cookie and adds it to the response.
-     */
+   
     public static void addCookie(HttpServletResponse response,
                                  String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value);
@@ -25,17 +20,13 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    /**
-     * Creates a cookie with the default max-age (7 days).
-     */
+  
     public static void addCookie(HttpServletResponse response,
                                  String name, String value) {
         addCookie(response, name, value, DEFAULT_MAX_AGE);
     }
 
-    /**
-     * Retrieves the value of a cookie by name.
-     */
+  
     public static String getCookieValue(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {

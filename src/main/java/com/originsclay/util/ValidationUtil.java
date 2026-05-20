@@ -2,10 +2,7 @@ package com.originsclay.util;
 
 import java.util.regex.Pattern;
 
-/**
- * ValidationUtil - Common input validation helpers.
- * Satisfies rubric "Other Req 1 - Validation checks".
- */
+
 public class ValidationUtil {
 
     private static final Pattern EMAIL_PATTERN =
@@ -26,10 +23,7 @@ public class ValidationUtil {
         return !isNullOrEmpty(phone) && PHONE_PATTERN.matcher(phone.replaceAll("[\\s-]", "")).matches();
     }
 
-    /**
-     * Password must be at least 8 characters, contain an uppercase letter,
-     * a lowercase letter, a digit, and a special character.
-     */
+
     public static boolean isStrongPassword(String password) {
         if (isNullOrEmpty(password) || password.length() < 8) return false;
         boolean hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;

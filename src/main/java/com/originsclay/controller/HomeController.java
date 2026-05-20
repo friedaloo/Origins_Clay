@@ -11,9 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * HomeController - Landing page showing featured products.
- */
+
 @WebServlet(name = "HomeController", urlPatterns = {"", "/home"})
 public class HomeController extends HttpServlet {
 

@@ -18,10 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * CartController - Session-based shopping cart.
- * Satisfies rubric 3e "Apply/Request" equivalent (add to cart / checkout).
- */
+
 @WebServlet(name = "CartController",
         urlPatterns = {"/cart", "/cart/add", "/cart/update", "/cart/remove", "/cart/checkout"})
 public class CartController extends HttpServlet {

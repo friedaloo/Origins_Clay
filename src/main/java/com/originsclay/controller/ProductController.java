@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * ProductController - Browse & search products (public).
- * Satisfies rubric 3d "Search feature".
- */
+
 @WebServlet(name = "ProductController", urlPatterns = {"/products", "/product-details"})
 public class ProductController extends HttpServlet {
 

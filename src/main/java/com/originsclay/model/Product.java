@@ -3,9 +3,7 @@ package com.originsclay.model;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-/**
- * Product model - represents a pottery item in the shop catalogue.
- */
+
 public class Product {
 
     private int id;

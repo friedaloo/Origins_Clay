@@ -2,9 +2,7 @@ package com.originsclay.model;
 
 import java.math.BigDecimal;
 
-/**
- * OrderItem model - a single line item within an order.
- */
+
 public class OrderItem {
 
     private int id;

@@ -5,9 +5,7 @@ import com.originsclay.model.Product;
 
 import java.util.List;
 
-/**
- * ProductService - Business logic for product catalogue.
- */
+
 public class ProductService {
 
     private final ProductDAO productDAO = new ProductDAO();

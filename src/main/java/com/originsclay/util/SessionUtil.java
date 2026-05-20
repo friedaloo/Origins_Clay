@@ -4,10 +4,6 @@ import com.originsclay.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-/**
- * SessionUtil - Convenience methods for session management.
- * Satisfies rubric 4c "Session management".
- */
 public class SessionUtil {
 
     private static final String USER_KEY = "loggedInUser";

@@ -15,10 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * AdminProductController - CRUD for products (admin only).
- * Satisfies rubric 2a.
- */
+
 @WebServlet(name = "AdminProductController",
         urlPatterns = {"/admin/products", "/admin/product/add",
                        "/admin/product/edit", "/admin/product/delete"})

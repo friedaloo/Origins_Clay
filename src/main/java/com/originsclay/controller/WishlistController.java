@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * WishlistController - Session-based wishlist feature.
- * Satisfies rubric 3f "Wish-list using sessions".
- */
+
 @WebServlet(name = "WishlistController",
         urlPatterns = {"/wishlist", "/wishlist/add", "/wishlist/remove"})
 public class WishlistController extends HttpServlet {
