@@ -3,6 +3,7 @@ package com.originsclay.controller;
 import com.originsclay.service.OrderService;
 import com.originsclay.service.ProductService;
 import com.originsclay.service.UserService;
+import com.originsclay.model.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,12 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * AdminReportController - Generates reports and analytics.
  * Satisfies rubric 2d "Generate reports / Sales vs availability analytics".
  */
-@WebServlet(name = "AdminReportController", urlPatterns = "/admin/reports")
+@WebServlet(name = "AdminReportController", urlPatterns = "/admin/reports", asyncSupported = true)
 public class AdminReportController extends HttpServlet {
 
     private final OrderService   orderService   = new OrderService();
@@ -43,5 +46,41 @@ public class AdminReportController extends HttpServlet {
 
         request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp")
                .forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("generateCsvReport".equals(action)) {
+            generateCsvReport(response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/admin/reports");
+        }
+    }
+
+    private void generateCsvReport(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=originsclay_inventory_report.csv");
+
+        List<Product> products = productService.findAll();
+
+        try (PrintWriter writer = response.getWriter()) {
+            // Header
+            writer.println("Product ID,Name,Category,Price,Stock,Featured");
+
+            // Data
+            for (Product p : products) {
+                writer.printf("%d,%s,%s,%.2f,%d,%b%n",
+                        p.getId(),
+                        p.getName(),
+                        p.getCategoryName(),
+                        p.getPrice(),
+                        p.getStockQuantity(),
+                        p.isFeatured());
+            }
+        }
     }
 }

@@ -15,17 +15,7 @@
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h1>Origins Clay</h1>
-            <span>Studio Admin</span>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/users" class="active">Manage Users</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
-        </ul>
-    </aside>
+    <jsp:include page="/WEB-INF/components/admin-sidebar.jsp" />
 
     <main class="content-wrapper">
         <div class="page-header">

@@ -15,25 +15,16 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h1>Origins Clay</h1>
-            <small>Studio Admin</small>
-        </div>
-        
-        <ul class="sidebar-menu">
-            <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/orders">Manage Orders</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
-        </ul>
-    </div>
+    <jsp:include page="/WEB-INF/components/admin-sidebar.jsp" />
 
     <div class="content-wrapper">
         
         <div class="page-header">
             <h2>Overview</h2>
-            <a href="#" class="btn">Reports</a>
+            <form action="${pageContext.request.contextPath}/admin/reports" method="post" style="display:inline;">
+                <input type="hidden" name="action" value="generateCsvReport">
+                <button type="submit" class="btn">Download CSV Report</button>
+            </form>
         </div>
 
         <div class="cards">

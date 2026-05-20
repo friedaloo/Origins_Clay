@@ -15,20 +15,7 @@
 </head>
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <div class="sidebar-header">
-        <h1>Origins Clay</h1>
-        <small>Studio Admin</small>
-    </div>
-    
-    <ul class="sidebar-menu">
-        <li><a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/orders" class="active">Manage Orders</a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/users">Manage Users</a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/products">Manage Products</a></li>
-    </ul>
-</div>
+<jsp:include page="/WEB-INF/components/admin-sidebar.jsp" />
 
 <!-- Main Content -->
 <div class="content-wrapper">
