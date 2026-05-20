@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-/**
- * AdminReportController - Generates reports and analytics.
- * Satisfies rubric 2d "Generate reports / Sales vs availability analytics".
- */
+
 @WebServlet(name = "AdminReportController", urlPatterns = "/admin/reports", asyncSupported = true)
 public class AdminReportController extends HttpServlet {
 
