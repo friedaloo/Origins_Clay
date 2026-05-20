@@ -78,7 +78,7 @@ public class AuthController extends HttpServlet {
         String email    = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
-System.out.printf(email,password,remember);
+
         if (ValidationUtil.isNullOrEmpty(email)) {
             request.setAttribute("error", "EMAIL parameter is empty!");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);

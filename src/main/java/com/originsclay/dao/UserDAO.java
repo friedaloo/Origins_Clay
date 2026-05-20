@@ -27,13 +27,13 @@ public class UserDAO {
             ps.setString(5, user.getPhone());
             ps.setString(6, user.getAddress());
             ps.setString(7, user.getPassword());
-            ps.setString(8, user.getRole());      // already fine if role is set correctly
-            ps.setString(9, user.isstatus() ? "Active" : "Pending");  // fix boolean → enum
+            ps.setString(8, user.getRole());      
+            ps.setString(9, user.isstatus() ? "Active" : "Pending");  
             ps.setBytes(10, user.getImage());  
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println("INSERT FAILED: " + e.getMessage()); // ← add this
+            System.err.println("INSERT FAILED: " + e.getMessage());
             e.printStackTrace();
             return false;
         }  
@@ -89,7 +89,6 @@ public class UserDAO {
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        // FIXED: Replaced column dependency 'created_at' with 'id'
         String sql = "SELECT * FROM users ORDER BY id DESC";
         try (Connection conn = DBUtil.getConnection();
              Statement st = conn.createStatement();

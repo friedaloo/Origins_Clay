@@ -19,8 +19,8 @@ public class UserService {
         }
 
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
-        user.setRole("Customer"); // ← capital C, matches enum('Admin','Customer')
-        user.setstatus(false);    // → maps to "Pending"
+        user.setRole("Customer"); 
+        user.setstatus(false);    
 
         boolean success = userDAO.insertUser(user);
         return success ? null : "Registration failed. Please try again.";
