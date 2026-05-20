@@ -97,6 +97,7 @@
 <body>
     <div class="outer-div">
         <h1>403 Error</h1>
+        <p>Access Denied</p>
         <div class="buttons">
             <a href="${pageContext.request.contextPath}/home" class="btn1">Return Back</a>
         </div>

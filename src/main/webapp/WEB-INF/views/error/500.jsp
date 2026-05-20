@@ -97,6 +97,7 @@
 <body>
     <div class="outer-div">
         <h1>500 Error</h1>
+        <p>Internal Server Error</p>
         <div class="buttons">
             <a href="${pageContext.request.contextPath}/home" class="btn1">Return Back</a>
         </div>

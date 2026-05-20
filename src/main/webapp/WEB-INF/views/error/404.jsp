@@ -97,6 +97,7 @@
 <body>
     <div class="outer-div">
         <h1>404 Error</h1>
+        <p>Page Not Found</p>
         <div class="buttons">
             <a href="${pageContext.request.contextPath}/home" class="btn1">Return Back</a>
         </div>
