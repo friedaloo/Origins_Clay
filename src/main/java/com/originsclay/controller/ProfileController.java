@@ -13,11 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import java.io.IOException;
 
-/**
- * ProfileController - Customer account management.
- * Satisfies rubric 3a (view/update personal info, change password).
- */
+
 @WebServlet(name = "ProfileController",
         urlPatterns = {"/account/profile", "/account/edit-profile",
                        "/account/change-password", "/account/profile-image"},
