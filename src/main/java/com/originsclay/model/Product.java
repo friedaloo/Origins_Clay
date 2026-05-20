@@ -15,7 +15,8 @@ public class Product {
     private String categoryName;   // transient / joined field
     private String imageUrl;
     private boolean featured;
-    private Timestamp createdAt;
+    private String sku;
+    private String status;
 
     public Product() {}
 
@@ -47,7 +48,12 @@ public class Product {
 
     public boolean isFeatured() { return featured; }
     public void setFeatured(boolean featured) { this.featured = featured; }
+    
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
 
-    public Timestamp getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+   
 }

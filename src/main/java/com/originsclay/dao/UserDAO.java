@@ -27,15 +27,16 @@ public class UserDAO {
             ps.setString(5, user.getPhone());
             ps.setString(6, user.getAddress());
             ps.setString(7, user.getPassword());
-            ps.setString(8, user.getRole());
-            ps.setBoolean(9, user.isstatus());
+            ps.setString(8, user.getRole());      // already fine if role is set correctly
+            ps.setString(9, user.isstatus() ? "Active" : "Pending");  // fix boolean → enum
             ps.setBytes(10, user.getImage());  
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
+            System.err.println("INSERT FAILED: " + e.getMessage()); // ← add this
             e.printStackTrace();
             return false;
-        }
+        }  
     }
 
     // ---------- READ ----------
@@ -170,7 +171,7 @@ public class UserDAO {
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setBoolean(1, status);
+        	ps.setString(1, status ? "Active" : "Pending");
             ps.setInt(2, userId);
             return ps.executeUpdate() > 0;
 
@@ -209,7 +210,7 @@ public class UserDAO {
         u.setAddress(rs.getString("address"));
         u.setPassword(rs.getString("password"));
         u.setRole(rs.getString("role"));
-        u.setstatus(rs.getInt("status") == 1);
+        u.setstatus("Active".equals(rs.getString("status")));
         u.setImage(rs.getBytes("image"));       
         return u;
     }

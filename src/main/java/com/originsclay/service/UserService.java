@@ -11,26 +11,21 @@ public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
     public String register(User user) {
-       
         if (userDAO.findByUsername(user.getUsername()) != null) {
             return "Username is already taken.";
         }
-
-        // 2. Check duplicate email
         if (userDAO.findByEmail(user.getEmail()) != null) {
             return "Email is already registered.";
         }
 
-        // Hash password
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
-        user.setRole("customer");
-        
-       
-        user.setstatus(false); // Account starts as false (deactivated) until admin approval
+        user.setRole("Customer"); // ← capital C, matches enum('Admin','Customer')
+        user.setstatus(false);    // → maps to "Pending"
 
         boolean success = userDAO.insertUser(user);
         return success ? null : "Registration failed. Please try again.";
     }
+    
 
     public User authenticate(String email, String password) {
         User user = userDAO.findByEmail(email);

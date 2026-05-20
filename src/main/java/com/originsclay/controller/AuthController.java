@@ -78,15 +78,15 @@ public class AuthController extends HttpServlet {
         String email    = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
-
+System.out.printf(email,password,remember);
         if (ValidationUtil.isNullOrEmpty(email)) {
-            request.setAttribute("error", "DEBUG TRACE: The server thinks EMAIL parameter is empty!");
+            request.setAttribute("error", "EMAIL parameter is empty!");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
 
         if (ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "DEBUG TRACE: The server thinks PASSWORD parameter is empty!");
+            request.setAttribute("error", "PASSWORD parameter is empty!");
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
             return;
         }
@@ -122,7 +122,7 @@ public class AuthController extends HttpServlet {
             CookieUtil.deleteCookie(response, "rememberedEmail");
         }
 
-        if ("admin".equals(user.getRole())) {
+        if ("admin".equalsIgnoreCase(user.getRole())) {
             response.sendRedirect(request.getContextPath() + "/admin/dashboard");
         } else {
             response.sendRedirect(request.getContextPath() + "/home");
@@ -143,41 +143,28 @@ public class AuthController extends HttpServlet {
         String password        = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        /* MULTILINE COMMENT APPLIED HERE:
-           Disabling the old combined registration check to locate the exact drop field.
-        if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-                || ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(email) 
-                || ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "Please fill in all required fields.");
-            request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp")
-                   .forward(request, response);
-            return;
-        }
-        */
-
-        // NEW INDIVIDUAL REGISTRATION DEBUG TRACERS:
         if (ValidationUtil.isNullOrEmpty(firstName)) {
-            request.setAttribute("error", "DEBUG TRACE: Server thinks 'firstName' is missing!");
+            request.setAttribute("error", "'firstName' is missing!");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
         if (ValidationUtil.isNullOrEmpty(lastName)) {
-            request.setAttribute("error", "DEBUG TRACE: Server thinks 'lastName' is missing!");
+            request.setAttribute("error", "'lastName' is missing!");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
         if (ValidationUtil.isNullOrEmpty(username)) {
-            request.setAttribute("error", "DEBUG TRACE: Server thinks 'username' is missing!");
+            request.setAttribute("error", "'username' is missing!");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
         if (ValidationUtil.isNullOrEmpty(email)) {
-            request.setAttribute("error", "DEBUG TRACE: Server thinks 'email' is missing!");
+            request.setAttribute("error", "'email' is missing!");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
         if (ValidationUtil.isNullOrEmpty(password)) {
-            request.setAttribute("error", "DEBUG TRACE: Server thinks 'password' is missing!");
+            request.setAttribute("error", "'password' is missing!");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
             return;
         }
