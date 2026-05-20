@@ -13,6 +13,7 @@
             font-family: Arial, sans-serif;
             background-color: #f3f3f3;
             flex-wrap: wrap;
+            padding-bottom: 80px; /* Space for fixed footer */
         }
 
         .container 
@@ -134,6 +135,8 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/components/header.jsp" />
+
 <div class="container">
 
     <div class="form-part">
@@ -165,6 +168,8 @@
     </div>
 
 </div>
+
+<jsp:include page="/WEB-INF/components/footer.jsp" />
 
 </body>
 </html>

@@ -1,133 +1,140 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Origins Clay</title>
+    <style>
+        :root {
+            --bg-color: #fcfaf0;
+            --text-dark: #1a1a1a;
+            --text-muted: #666666;
+            --olive-green: #556b3f;
+            --border-color: #e0ddd9;
+            --font-serif: 'Cormorant Garamond', serif;
+        }
 
-<jsp:include page="/WEB-INF/components/header.jsp">
-    <jsp:param name="pageTitle" value="About Us" />
-    <jsp:param name="extraCSS" value="
-        <style>
-            :root {
-                --bg-color: #fcfaf0;
-                --text-dark: #1a1a1a;
-                --text-muted: #666666;
-                --olive-green: #556b3f;
-                --border-color: #e0ddd9;
-                --font-serif: 'Cormorant Garamond', serif;
-            }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
 
-            body {
-                background-color: var(--bg-color);
-                color: var(--text-dark);
-            }
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+            padding-bottom: 150px; /* Space for fixed footer */
+        }
 
-            .about-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 100px 40px;
-            }
+        .about-hero {
+            display: flex;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
 
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h1 {
+            font-family: var(--font-serif);
+            font-size: 56px;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .about-img {
+            flex: 1;
+        }
+
+        .about-img img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            box-shadow: 20px 20px 0 var(--border-color);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 100px;
+        }
+
+        .value-card {
+            padding: 40px;
+            background: white;
+            border: 1px solid var(--border-color);
+        }
+
+        .value-card h3 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .value-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: var(--text-dark);
+            color: white;
+            padding: 80px 40px;
+            margin-top: 120px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 992px) {
             .about-hero {
-                display: flex;
-                gap: 80px;
-                align-items: center;
-                margin-bottom: 120px;
-            }
-
-            .about-text {
-                flex: 1;
-            }
-
-            .about-text h1 {
-                font-family: var(--font-serif);
-                font-size: 56px;
-                font-weight: 400;
-                margin-bottom: 30px;
-            }
-
-            .about-text p {
-                font-size: 18px;
-                line-height: 1.8;
-                color: var(--text-muted);
-                margin-bottom: 25px;
-            }
-
-            .about-img {
-                flex: 1;
-            }
-
-            .about-img img {
-                width: 100%;
-                aspect-ratio: 4/5;
-                object-fit: cover;
-                box-shadow: 20px 20px 0 var(--border-color);
-            }
-
-            .values-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 40px;
-                margin-top: 100px;
-            }
-
-            .value-card {
-                padding: 40px;
-                background: white;
-                border: 1px solid var(--border-color);
-            }
-
-            .value-card h3 {
-                font-family: var(--font-serif);
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-
-            .value-card p {
-                font-size: 15px;
-                line-height: 1.6;
-                color: var(--text-muted);
-            }
-
-            .stats-bar {
-                display: flex;
-                justify-content: space-around;
-                background: var(--text-dark);
-                color: white;
-                padding: 80px 40px;
-                margin-top: 120px;
-            }
-
-            .stat-item {
+                flex-direction: column;
                 text-align: center;
             }
-
-            .stat-number {
-                font-family: var(--font-serif);
-                font-size: 48px;
-                margin-bottom: 10px;
+            .values-grid {
+                grid-template-columns: 1fr;
             }
-
-            .stat-label {
-                font-size: 12px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                opacity: 0.7;
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 40px;
             }
+        }
+    </style>
+</head>
+<body>
 
-            @media (max-width: 992px) {
-                .about-hero {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                .values-grid {
-                    grid-template-columns: 1fr;
-                }
-                .stats-bar {
-                    flex-wrap: wrap;
-                    gap: 40px;
-                }
-            }
-        </style>
-    " />
-</jsp:include>
+<jsp:include page="/WEB-INF/components/header.jsp" />
 
 <main class="about-container">
     <section class="about-hero">
@@ -181,3 +188,6 @@
 </main>
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />
+
+</body>
+</html>

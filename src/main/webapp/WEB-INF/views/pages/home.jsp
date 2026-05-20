@@ -14,6 +14,7 @@
             color: #222;
             margin: 0;
             padding: 0;
+            padding-bottom: 80px; /* Space for fixed footer */
         }
 
         .container 
@@ -187,6 +188,8 @@
 
 <body>
 
+<jsp:include page="/WEB-INF/components/header.jsp" />
+
 <div class="container">
     <section class="outer-section">
         <div class="text-part">
@@ -225,6 +228,8 @@
     </section>
     
 </div>
+
+<jsp:include page="/WEB-INF/components/footer.jsp" />
 
 </body>
 </html>
