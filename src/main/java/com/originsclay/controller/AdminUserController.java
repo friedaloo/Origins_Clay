@@ -11,10 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * AdminUserController - Approve, reject, and manage user accounts.
- * Satisfies rubric 2e "User management/approval".
- */
+
 @WebServlet(name = "AdminUserController",
         urlPatterns = {"/admin/users", "/admin/user/approve",
                        "/admin/user/reject", "/admin/user/delete"})

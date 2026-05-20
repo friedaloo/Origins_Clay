@@ -21,7 +21,8 @@ CREATE TABLE users (
     address       VARCHAR(255)  DEFAULT NULL,
 
     role          ENUM('Admin','Customer') NOT NULL DEFAULT 'Customer',
-    status        ENUM('Pending','Active') NOT NULL DEFAULT 'Pending'
+    status        ENUM('Pending','Active') NOT NULL DEFAULT 'Pending',
+    image         LONGBLOB      DEFAULT NULL   -- Added: profile picture storage
 );
 
 -- ---------------------------------------------------------------------------
