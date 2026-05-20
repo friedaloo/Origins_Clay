@@ -1,89 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${param.pageTitle} — Origins Clay</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      border-radius: 0;
-    }
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-    }
+  body {
+    font-family: Arial, sans-serif;
+  }
 
-    .site-header {
-      position: sticky;
-      top: 0px;
-      z-index: 1000;
-      width: 100%;
-      background-color: #3c3833; 
-      padding: 12px 40px;
-    }
+  .site-header {
+    position: sticky;
+    top: 0px;
+    z-index: 1000;
+    width: 100%;
+    background-color: #3c3833; 
+    padding: 12px 40px;
+  }
 
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .left-group {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+  }
+
+  .logo a {
+    font-size: 24px;
+    color: #e8e8e8;
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+  }
+
+  .nav-item a {
+    font-size: 15px;
+    color: #c4c4c4;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-item a:hover {
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
     .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
     }
-
     .left-group {
-      display: flex;
-      align-items: center;
-      gap: 35px;
+      flex-direction: column;
+      gap: 15px;
     }
-
-    .logo a {
-      font-size: 24px;
-      color: #e8e8e8;
-      text-decoration: none;
-      font-weight: 400;
-    }
-
     .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 35px;
+      gap: 15px;
+      justify-content: center;
     }
-
-    .nav-item a {
-      font-size: 15px;
-      color: #c4c4c4;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-item a:hover {
-      color: #ffffff;
-    }
-
-    @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
-      .left-group {
-        flex-direction: column;
-        gap: 15px;
-      }
-      .nav-links {
-        gap: 15px;
-        justify-content: center;
-      }
-    }
-  </style>
-  ${param.extraCSS}
-</head>
-<body>
+  }
+</style>
 
 <!-- ====== HEADER ====== -->
 <header class="site-header">
@@ -125,4 +116,3 @@
     </div>
   </div>
 </header>
-

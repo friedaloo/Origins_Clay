@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-/**
- * AboutController - Serves the About Us page.
- * Satisfies rubric 7a.
- */
+
 @WebServlet(name = "AboutController", urlPatterns = "/about")
 public class AboutController extends HttpServlet {
 
