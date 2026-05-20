@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users - Origins Clay</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/adminstle/admin_styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin_styles.css">
 </head>
 <body>
 
