@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
 
 /**
  * ProfileController - Customer account management.
@@ -18,8 +20,9 @@ import java.io.IOException;
  */
 @WebServlet(name = "ProfileController",
         urlPatterns = {"/account/profile", "/account/edit-profile",
-                       "/account/change-password"},
+                       "/account/change-password", "/account/profile-image"},
         asyncSupported = true)
+@MultipartConfig(maxFileSize = 1024 * 1024 * 5) // 5MB
 public class ProfileController extends HttpServlet {
 
     private final UserService userService = new UserService();
@@ -29,11 +32,17 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
 
         User user = SessionUtil.getLoggedInUser(request);
+        String uri = request.getServletPath();
+
+        if ("/account/profile-image".equals(uri)) {
+            handleViewImage(request, response, user);
+            return;
+        }
+
         // Reload fresh data from DB
         user = userService.findById(user.getId());
         request.setAttribute("user", user);
 
-        String uri = request.getServletPath();
         switch (uri) {
             case "/account/edit-profile":
                 request.getRequestDispatcher("/WEB-INF/views/account/edit-profile.jsp")
@@ -46,6 +55,23 @@ public class ProfileController extends HttpServlet {
             default:
                 request.getRequestDispatcher("/WEB-INF/views/account/profile.jsp")
                        .forward(request, response);
+        }
+    }
+
+    private void handleViewImage(HttpServletRequest request, HttpServletResponse response, User user)
+            throws IOException {
+        
+        int id = user.getId();
+        String idParam = request.getParameter("id");
+        if (idParam != null) id = Integer.parseInt(idParam);
+
+        User target = userService.findById(id);
+        if (target != null && target.getImage() != null) {
+            response.setContentType("image/jpeg");
+            response.getOutputStream().write(target.getImage());
+        } else {
+            // Placeholder
+            response.sendRedirect(request.getContextPath() + "/assets/images/placeholder.jpg");
         }
     }
 
@@ -67,15 +93,16 @@ public class ProfileController extends HttpServlet {
 
         User sessionUser = SessionUtil.getLoggedInUser(request);
 
+        String username  = request.getParameter("username");
         String firstName = request.getParameter("firstName");
         String lastName  = request.getParameter("lastName");
         String email     = request.getParameter("email");
         String phone     = request.getParameter("phone");
         String address   = request.getParameter("address");
 
-        if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-                || ValidationUtil.isNullOrEmpty(email)) {
-            request.setAttribute("error", "Name and email are required.");
+        if (ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(firstName) 
+                || ValidationUtil.isNullOrEmpty(lastName) || ValidationUtil.isNullOrEmpty(email)) {
+            request.setAttribute("error", "Username, Name and email are required.");
             request.setAttribute("user", sessionUser);
             request.getRequestDispatcher("/WEB-INF/views/account/edit-profile.jsp")
                    .forward(request, response);
@@ -84,11 +111,24 @@ public class ProfileController extends HttpServlet {
 
         User updated = new User();
         updated.setId(sessionUser.getId());
+        updated.setUsername(username);
         updated.setFirstName(firstName);
         updated.setLastName(lastName);
         updated.setEmail(email);
         updated.setPhone(phone);
         updated.setAddress(address);
+
+        // Handle Image Upload
+        Part filePart = request.getPart("profileImage");
+        if (filePart != null && filePart.getSize() > 0) {
+            try (InputStream is = filePart.getInputStream()) {
+                byte[] imageBytes = is.readAllBytes();
+                updated.setImage(imageBytes);
+            }
+        } else {
+            // Keep existing image
+            updated.setImage(sessionUser.getImage());
+        }
 
         boolean success = userService.updateProfile(updated);
 

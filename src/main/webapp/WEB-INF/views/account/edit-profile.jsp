@@ -13,7 +13,12 @@
 </c:if>
 
 <div class="card" style="max-width: 600px;">
-    <form action="${pageContext.request.contextPath}/account/edit-profile" method="post">
+    <form action="${pageContext.request.contextPath}/account/edit-profile" method="post" enctype="multipart/form-data">
+        <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="${user.username}" required>
+        </div>
+
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
             <div class="field" style="flex: 1; min-width: 200px;">
                 <label for="firstName">First Name</label>
@@ -38,6 +43,12 @@
         <div class="field">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" value="${user.address}">
+        </div>
+
+        <div class="field">
+            <label for="profileImage">Profile Picture</label>
+            <input type="file" id="profileImage" name="profileImage" accept="image/*">
+            <small style="color: #777; font-size: 0.6rem; margin-top: 4px;">Leave empty to keep current picture.</small>
         </div>
 
         <div style="display: flex; gap: 0.8rem; margin-top: 0.5rem;">

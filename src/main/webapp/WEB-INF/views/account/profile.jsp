@@ -20,12 +20,15 @@
     <div style="flex: 2; min-width: 300px;">
         <div class="card">
             <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
-                <div style="width: 72px; height: 72px; background: var(--clay-olive); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 1.8rem; font-weight: 600;">
-                    ${user.firstName.charAt(0)}${user.lastName.charAt(0)}
+                <div style="width: 100px; height: 100px; overflow: hidden; border: 1px solid var(--clay-border);">
+                    <img src="${pageContext.request.contextPath}/account/profile-image" 
+                         alt="Profile Picture" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <div>
                     <h2 style="font-family: var(--font-serif); font-size: 1.5rem;">${user.fullName}</h2>
-                    <span style="font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted);">${user.role}</span>
+                    <div style="font-size: 0.8rem; color: var(--clay-muted); margin-bottom: 4px;">@${user.username}</div>
+                    <span style="font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clay-muted);">${user.role} · ${user.status}</span>
                 </div>
             </div>
 
@@ -33,7 +36,6 @@
                 <tr><th style="width: 140px;">Email</th><td>${user.email}</td></tr>
                 <tr><th>Phone</th><td>${not empty user.phone ? user.phone : '—'}</td></tr>
                 <tr><th>Address</th><td>${not empty user.address ? user.address : '—'}</td></tr>
-                <tr><th>Member Since</th><td>${user.createdAt}</td></tr>
             </table>
         </div>
     </div>

@@ -124,6 +124,7 @@ public class AuthController extends HttpServlet {
     private void handleRegister(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String username        = request.getParameter("username");
         String firstName       = request.getParameter("firstName");
         String lastName        = request.getParameter("lastName");
         String email           = request.getParameter("email");
@@ -133,8 +134,9 @@ public class AuthController extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         // Validation
-        if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
-                || ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(password)) {
+        if (ValidationUtil.isNullOrEmpty(username) || ValidationUtil.isNullOrEmpty(firstName) 
+                || ValidationUtil.isNullOrEmpty(lastName) || ValidationUtil.isNullOrEmpty(email) 
+                || ValidationUtil.isNullOrEmpty(password)) {
             request.setAttribute("error", "Please fill in all required fields.");
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp")
                    .forward(request, response);
@@ -165,6 +167,7 @@ public class AuthController extends HttpServlet {
         }
 
         User user = new User();
+        user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

@@ -15,19 +15,21 @@ public class UserDAO {
     // ---------- CREATE ----------
 
     public boolean insertUser(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, email, phone, address, password, role, approved) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, first_name, last_name, email, phone, address, password, role, status, image) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getAddress());
-            ps.setString(6, user.getPassword());
-            ps.setString(7, user.getRole());
-            ps.setBoolean(8, user.isApproved());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getAddress());
+            ps.setString(7, user.getPassword());
+            ps.setString(8, user.getRole());
+            ps.setString(9, user.getStatus());
+            ps.setBytes(10, user.getImage());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -70,7 +72,7 @@ public class UserDAO {
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users ORDER BY created_at DESC";
+        String sql = "SELECT * FROM users ORDER BY id DESC";
         try (Connection conn = DBUtil.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -84,7 +86,7 @@ public class UserDAO {
 
     public List<User> findByRole(String role) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users WHERE role = ? ORDER BY created_at DESC";
+        String sql = "SELECT * FROM users WHERE role = ? ORDER BY id DESC";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -113,16 +115,17 @@ public class UserDAO {
     // ---------- UPDATE ----------
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE users SET first_name=?, last_name=?, email=?, phone=?, address=? WHERE id=?";
+        String sql = "UPDATE users SET username=?, first_name=?, last_name=?, email=?, phone=?, address=? WHERE id=?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhone());
-            ps.setString(5, user.getAddress());
-            ps.setInt(6, user.getId());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getAddress());
+            ps.setInt(7, user.getId());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -146,12 +149,27 @@ public class UserDAO {
         }
     }
 
-    public boolean setApproval(int userId, boolean approved) {
-        String sql = "UPDATE users SET approved = ? WHERE id = ?";
+    public boolean updateStatus(int userId, String status) {
+        String sql = "UPDATE users SET status = ? WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setBoolean(1, approved);
+            ps.setString(1, status);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateImage(int userId, byte[] image) {
+        String sql = "UPDATE users SET image = ? WHERE id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setBytes(1, image);
             ps.setInt(2, userId);
             return ps.executeUpdate() > 0;
 
@@ -182,6 +200,7 @@ public class UserDAO {
     private User mapRow(ResultSet rs) throws SQLException {
         User u = new User();
         u.setId(rs.getInt("id"));
+        u.setUsername(rs.getString("username"));
         u.setFirstName(rs.getString("first_name"));
         u.setLastName(rs.getString("last_name"));
         u.setEmail(rs.getString("email"));
@@ -189,8 +208,8 @@ public class UserDAO {
         u.setAddress(rs.getString("address"));
         u.setPassword(rs.getString("password"));
         u.setRole(rs.getString("role"));
-        u.setApproved(rs.getBoolean("approved"));
-        u.setCreatedAt(rs.getTimestamp("created_at"));
+        u.setStatus(rs.getString("status"));
+        u.setImage(rs.getBytes("image"));
         return u;
     }
 }

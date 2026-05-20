@@ -25,8 +25,8 @@ public class UserService {
 
         // Hash password
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
-        user.setRole("customer");
-        user.setApproved(false);  // admin must approve
+        user.setRole("Customer");
+        user.setStatus("Pending");  // admin must approve
 
         boolean success = userDAO.insertUser(user);
         return success ? null : "Registration failed. Please try again.";
@@ -40,7 +40,7 @@ public class UserService {
         User user = userDAO.findByEmail(email);
         if (user == null) return null;
         if (!PasswordUtil.verifyPassword(password, user.getPassword())) return null;
-        if (!user.isApproved()) return null;
+        if (!"Active".equalsIgnoreCase(user.getStatus())) return null;
         return user;
     }
 
@@ -51,7 +51,7 @@ public class UserService {
         User user = userDAO.findByEmail(email);
         if (user == null) return false;
         if (!PasswordUtil.verifyPassword(password, user.getPassword())) return false;
-        return !user.isApproved();
+        return "Pending".equalsIgnoreCase(user.getStatus());
     }
 
     public User findById(int id) {
@@ -86,11 +86,11 @@ public class UserService {
     }
 
     public boolean approveUser(int userId) {
-        return userDAO.setApproval(userId, true);
+        return userDAO.updateStatus(userId, "Active");
     }
 
     public boolean rejectUser(int userId) {
-        return userDAO.setApproval(userId, false);
+        return userDAO.updateStatus(userId, "Pending");
     }
 
     public boolean deleteUser(int userId) {

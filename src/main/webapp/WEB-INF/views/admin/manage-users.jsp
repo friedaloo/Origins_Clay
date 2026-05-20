@@ -27,6 +27,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Username</th>
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Role</th>
@@ -38,17 +39,24 @@
                     <c:choose>
                         <c:when test="${not empty users}">
                             <c:forEach var="u" items="${users}">
-                                <tr class="${!u.approved ? 'row-pending' : ''}">
+                                <tr class="${u.status == 'Pending' ? 'row-pending' : ''}">
                                     <td>${u.id}</td>
+                                    <td>${u.username}</td>
                                     <td>${u.fullName}</td>
                                     <td>${u.email}</td>
                                     <td>${u.role}</td>
-                                    <td>${u.approved ? 'Active' : 'Pending'}</td>
+                                    <td>${u.status}</td>
                                     <td>
-                                        <c:if test="${!u.approved}">
+                                        <c:if test="${u.status == 'Pending'}">
                                             <form action="${pageContext.request.contextPath}/admin/user/approve" method="post" style="display:inline;">
                                                 <input type="hidden" name="id" value="${u.id}">
                                                 <button type="submit" class="action-btn">Activate</button>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${u.status == 'Active'}">
+                                            <form action="${pageContext.request.contextPath}/admin/user/reject" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" value="${u.id}">
+                                                <button type="submit" class="action-btn">Deactivate</button>
                                             </form>
                                         </c:if>
                                         <form action="${pageContext.request.contextPath}/admin/user/delete" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this user?')">
@@ -60,7 +68,7 @@
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <tr><td colspan="6" style="text-align:center; color:var(--clay-muted); padding:1rem;">No users found.</td></tr>
+                            <tr><td colspan="7" style="text-align:center; color:var(--clay-muted); padding:1rem;">No users found.</td></tr>
                         </c:otherwise>
                     </c:choose>
                 </tbody>

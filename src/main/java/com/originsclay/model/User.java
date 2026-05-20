@@ -8,22 +8,24 @@ import java.sql.Timestamp;
 public class User {
 
     private int id;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
     private String password;          // hashed
-    private String role;              // "customer" | "admin"
-    private boolean approved;         // admin must approve new accounts
-    private Timestamp createdAt;
+    private String role;              // "Admin" | "Customer"
+    private String status;            // "Pending" | "Active"
+    private byte[] image;             // profile picture
 
     public User() {}
 
-    public User(int id, String firstName, String lastName, String email,
+    public User(int id, String username, String firstName, String lastName, String email,
                 String phone, String address, String password,
-                String role, boolean approved, Timestamp createdAt) {
+                String role, String status, byte[] image) {
         this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -31,14 +33,17 @@ public class User {
         this.address = address;
         this.password = password;
         this.role = role;
-        this.approved = approved;
-        this.createdAt = createdAt;
+        this.status = status;
+        this.image = image;
     }
 
     // ---------- Getters & Setters ----------
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -61,11 +66,11 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public boolean isApproved() { return approved; }
-    public void setApproved(boolean approved) { this.approved = approved; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public Timestamp getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+    public byte[] getImage() { return image; }
+    public void setImage(byte[] image) { this.image = image; }
 
     public String getFullName() { return firstName + " " + lastName; }
 }
