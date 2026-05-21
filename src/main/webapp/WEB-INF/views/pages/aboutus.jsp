@@ -169,7 +169,7 @@
 <jsp:include page="/WEB-INF/components/header.jsp" />
 
      <div class="big-image"> 
-         <img src="${pageContext.request.contextPath}/assets/images/Group.png" alt="Picture of all group members" onerror="this.src='https://placehold.co/1200x420?text=Origins+Clay+Team'"> 
+         <img src="${pageContext.request.contextPath}/assets/images/Group.png" alt="Origins Clay Team - Group Photo"> 
      </div> 
  
      <section class="about-section"> 
