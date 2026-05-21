@@ -12,4 +12,9 @@
         <li><a href="${pageContext.request.contextPath}/admin/products" class="${requestScope['javax.servlet.forward.servlet_path'] == '/admin/products' ? 'active' : ''}">Manage Products</a></li>
         <li><a href="${pageContext.request.contextPath}/admin/reports" class="${requestScope['javax.servlet.forward.servlet_path'] == '/admin/reports' ? 'active' : ''}">Reports</a></li>
     </ul>
+
+    <div class="sidebar-footer">
+        <a href="${pageContext.request.contextPath}/account/profile" class="sidebar-footer-link">Account</a>
+        <a href="${pageContext.request.contextPath}/logout" class="sidebar-footer-link logout">Logout</a>
+    </div>
 </div>
