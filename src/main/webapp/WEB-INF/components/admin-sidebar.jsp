@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <div class="sidebar">
     <div class="sidebar-header">
-        <h1>Origins Clay</h1>
+        <h1>ORIGINS CLAY</h1>
         <small>Studio Admin</small>
     </div>
     

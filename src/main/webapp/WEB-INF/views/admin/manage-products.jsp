@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Products - Origins Clay</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin_styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin_styles.css?v=1.1">
 </head>
 <body>
 
