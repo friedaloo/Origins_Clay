@@ -3,384 +3,296 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <jsp:include page="/WEB-INF/components/header.jsp">
-    <jsp:param name="pageTitle" value="Your Collection" />
-    <jsp:param name="extraCSS" value="
-        <link rel='preconnect' href='https://fonts.googleapis.com'>
-        <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
-        <link href='https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap' rel='stylesheet'>
-        <style>
-            :root {
-                --bg-color: #fcfaf0;
-                --olive-green: #556b3f;
-                --text-dark: #1a1a1a;
-                --text-muted: #666666;
-                --border-color: #dddddd;
-                --font-serif: 'Cormorant Garamond', serif;
-                --font-sans: 'Jost', sans-serif;
-            }
-
-            body {
-                background-color: var(--bg-color);
-                color: var(--text-dark);
-                font-family: var(--font-sans);
-            }
-
-            .collection-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 80px 20px;
-            }
-
-            .collection-title {
-                font-family: var(--font-serif);
-                font-size: 56px;
-                font-weight: 400;
-                margin-bottom: 60px;
-                color: var(--text-dark);
-            }
-
-            .cart-layout {
-                display: flex;
-                gap: 60px;
-                align-items: flex-start;
-            }
-
-            .cart-items-list {
-                flex: 1.5;
-            }
-
-            .cart-item-card {
-                display: flex;
-                gap: 30px;
-                padding-bottom: 40px;
-                margin-bottom: 40px;
-                border-bottom: 1px solid var(--border-color);
-            }
-
-            .cart-item-img-wrap {
-                width: 240px;
-                height: 240px;
-                flex-shrink: 0;
-            }
-
-            .cart-item-img-wrap img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                background-color: #f0f0f0;
-            }
-
-            .cart-item-info {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .cart-item-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                margin-bottom: 10px;
-            }
-
-            .cart-item-name {
-                font-family: var(--font-serif);
-                font-size: 32px;
-                font-weight: 400;
-                margin: 0;
-            }
-
-            .cart-item-price {
-                font-size: 24px;
-                font-weight: 400;
-                white-space: nowrap;
-            }
-
-            .cart-item-tag {
-                font-size: 11px;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-                color: var(--text-muted);
-                border: 1px solid var(--border-color);
-                padding: 4px 12px;
-                border-radius: 20px;
-                display: inline-block;
-                margin-bottom: 20px;
-                align-self: flex-start;
-            }
-
-            .cart-item-desc {
-                font-size: 14px;
-                color: var(--text-muted);
-                line-height: 1.6;
-                margin-bottom: 30px;
-                max-width: 450px;
-            }
-
-            .cart-item-actions {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-top: auto;
-            }
-
-            .qty-control {
-                display: flex;
-                align-items: center;
-                border: 1px solid var(--border-color);
-                padding: 4px;
-                background: white;
-            }
-
-            .qty-btn {
-                background: none;
-                border: none;
-                padding: 5px 15px;
-                cursor: pointer;
-                font-size: 18px;
-                color: var(--text-muted);
-                transition: color 0.2s;
-            }
-
-            .qty-btn:hover {
-                color: var(--text-dark);
-            }
-
-            .qty-val {
-                padding: 0 10px;
-                font-size: 14px;
-                min-width: 30px;
-                text-align: center;
-            }
-
-            .remove-link {
-                background: none;
-                border: none;
-                text-transform: uppercase;
-                font-size: 12px;
-                letter-spacing: 1px;
-                color: var(--text-muted);
-                cursor: pointer;
-                padding: 0;
-                transition: color 0.2s;
-                text-decoration: none;
-            }
-
-            .remove-link:hover {
-                color: var(--text-dark);
-            }
-
-            /* Sidebar Styles */
-            .cart-sidebar {
-                flex: 1;
-                min-width: 350px;
-                display: flex;
-                flex-direction: column;
-                gap: 30px;
-            }
-
-            .summary-box {
-                border: 1px solid var(--border-color);
-                padding: 40px;
-                background: white;
-            }
-
-            .summary-heading {
-                font-family: var(--font-serif);
-                font-size: 32px;
-                font-weight: 400;
-                margin-bottom: 30px;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 20px;
-            }
-
-            .summary-line {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 15px;
-                font-size: 14px;
-            }
-
-            .summary-line.total-line {
-                margin-top: 25px;
-                padding-top: 25px;
-                border-top: 1px solid var(--border-color);
-                font-weight: 500;
-                font-size: 18px;
-            }
-
-            .checkout-action-btn {
-                width: 100%;
-                background-color: var(--olive-green);
-                color: white;
-                border: none;
-                padding: 20px;
-                font-size: 14px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                margin-top: 25px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-                transition: opacity 0.2s;
-            }
-
-            .checkout-action-btn:hover {
-                opacity: 0.9;
-            }
-
-            .shipping-info-text {
-                font-size: 12px;
-                color: var(--text-muted);
-                text-align: center;
-                margin-top: 20px;
-            }
-
-            .brand-promise-box {
-                border: 1px solid var(--border-color);
-                padding: 30px;
-                background: white;
-            }
-
-            .promise-header {
-                font-size: 12px;
-                letter-spacing: 2.5px;
-                text-transform: uppercase;
-                font-weight: 500;
-                margin-bottom: 20px;
-            }
-
-            .promise-desc {
-                font-size: 14px;
-                color: var(--text-muted);
-                line-height: 1.6;
-            }
-
-            /* Mobile adjustments */
-            @media (max-width: 992px) {
-                .cart-layout {
-                    flex-direction: column;
-                }
-                .cart-sidebar {
-                    width: 100%;
-                }
-            }
-
-            @media (max-width: 600px) {
-                .cart-item-card {
-                    flex-direction: column;
-                }
-                .cart-item-img-wrap {
-                    width: 100%;
-                    height: auto;
-                    aspect-ratio: 1/1;
-                }
-                .collection-title {
-                    font-size: 40px;
-                }
-            }
-        </style>
-    " />
+    <jsp:param name="pageTitle" value="Your Cart" />
 </jsp:include>
 
-<div class="collection-container">
-    <h1 class="collection-title">Your Collection</h1>
+<style>
+    body {
+        background-color: #FDFCEB;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .cart-container {
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 40px;
+    }
+
+    .cart-title {
+        font-size: 36px;
+        font-weight: 400;
+        margin-bottom: 40px;
+        border-bottom: 1px solid #333;
+        padding-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .cart-layout {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 60px;
+    }
+
+    /* Cart Items */
+    .cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .cart-item {
+        display: grid;
+        grid-template-columns: 150px 1fr auto;
+        gap: 30px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #E0E0E0;
+        align-items: center;
+    }
+
+    .cart-item-img {
+        width: 150px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        background-color: #fff;
+    }
+
+    .cart-item-info h3 {
+        font-size: 18px;
+        margin: 0 0 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .cart-item-category {
+        font-size: 11px;
+        color: #999;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .cart-item-price {
+        font-size: 16px;
+        color: #8B735B;
+    }
+
+    .cart-item-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 15px;
+    }
+
+    .qty-box {
+        display: flex;
+        align-items: center;
+        border: 1px solid #E0E0E0;
+        background: white;
+    }
+
+    .qty-btn {
+        background: none;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        color: #666;
+        font-size: 16px;
+    }
+
+    .qty-btn:hover {
+        color: #333;
+    }
+
+    .qty-val {
+        padding: 0 10px;
+        font-size: 14px;
+        min-width: 30px;
+        text-align: center;
+    }
+
+    .remove-btn {
+        background: none;
+        border: none;
+        color: #999;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .remove-btn:hover {
+        color: #333;
+    }
+
+    /* Summary Sidebar */
+    .cart-summary {
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid #E0E0E0;
+        height: fit-content;
+    }
+
+    .summary-title {
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #F0F0F0;
+        padding-bottom: 15px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .summary-row.total {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #F0F0F0;
+        font-weight: bold;
+        color: #333;
+        font-size: 18px;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        background-color: #445434;
+        color: white;
+        border: none;
+        padding: 18px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 25px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .checkout-btn:hover {
+        background-color: #364229;
+    }
+
+    .checkout-btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 100px 0;
+        grid-column: 1 / -1;
+    }
+
+    .empty-cart p {
+        font-size: 18px;
+        color: #999;
+        margin-bottom: 30px;
+    }
+
+    .continue-link {
+        color: #333;
+        text-decoration: underline;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    /* Mobile */
+    @media (max-width: 992px) {
+        .cart-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .cart-item {
+            grid-template-columns: 100px 1fr;
+        }
+        .cart-item-controls {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+</style>
+
+<div class="cart-container">
+    <h1 class="cart-title">Your Collection</h1>
 
     <div class="cart-layout">
-        <!-- List of Items -->
-        <div class="cart-items-list">
+        <div class="cart-items">
             <c:set var="cartSubtotal" value="0" />
             <c:choose>
                 <c:when test="${not empty sessionScope.cart}">
                     <c:forEach var="item" items="${sessionScope.cart}">
                         <c:set var="cartSubtotal" value="${cartSubtotal + item.subtotal}" />
-                        <div class="cart-item-card" id="item-${item.productId}">
-                            <div class="cart-item-img-wrap">
-                                <img src="${pageContext.request.contextPath}/${item.imageUrl}" 
-                                     alt="${item.productName}" 
-                                     onerror="this.src='${pageContext.request.contextPath}/assets/images/placeholder.jpg'">
-                            </div>
+                        <div class="cart-item">
+                            <img src="${pageContext.request.contextPath}/${item.imageUrl}" 
+                                 alt="${item.productName}" 
+                                 class="cart-item-img"
+                                 onerror="this.src='${pageContext.request.contextPath}/assets/images/placeholder.jpg'">
                             
                             <div class="cart-item-info">
-                                <div class="cart-item-header">
-                                    <h2 class="cart-item-name">${item.productName}</h2>
-                                    <div class="cart-item-price">$ <fmt:formatNumber value="${item.price}" pattern="#,##0.00" /></div>
+                                <span class="cart-item-category">${not empty item.categoryName ? item.categoryName : 'Artisan Piece'}</span>
+                                <h3>${item.productName}</h3>
+                                <div class="cart-item-price">$<fmt:formatNumber value="${item.price}" pattern="#,##0.00" /></div>
+                            </div>
+                            
+                            <div class="cart-item-controls">
+                                <div class="qty-box">
+                                    <button type="button" class="qty-btn" onclick="updateQty('${item.productId}', '${item.quantity - 1}')">−</button>
+                                    <span class="qty-val">${item.quantity}</span>
+                                    <button type="button" class="qty-btn" onclick="updateQty('${item.productId}', '${item.quantity + 1}')">+</button>
                                 </div>
-                                
-                                <span class="cart-item-tag">${not empty item.categoryName ? item.categoryName : 'HANDCRAFTED'}</span>
-                                
-                                <p class="cart-item-desc">
-                                    ${item.description}
-                                </p>
-                                
-                                <div class="cart-item-actions">
-                                    <div class="qty-control">
-                                        <button type="button" class="qty-btn" onclick="updateQty(${item.productId}, ${item.quantity - 1})">−</button>
-                                        <span class="qty-val"><fmt:formatNumber value="${item.quantity}" pattern="00" /></span>
-                                        <button type="button" class="qty-btn" onclick="updateQty(${item.productId}, ${item.quantity + 1})">+</button>
-                                    </div>
-                                    
-                                    <button type="button" class="remove-link" onclick="removeItem(${item.productId})">REMOVE</button>
-                                </div>
+                                <button type="button" class="remove-btn" onclick="removeItem('${item.productId}')">Remove</button>
                             </div>
                         </div>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <div style="text-align: center; padding: 60px 0; color: var(--text-muted);">
-                        <p style="font-size: 18px; margin-bottom: 20px;">Your collection is empty.</p>
-                        <a href="${pageContext.request.contextPath}/products" style="color: var(--text-dark); text-decoration: underline; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">Shop our pieces</a>
+                    <div class="empty-cart">
+                        <p>Your collection is currently empty.</p>
+                        <a href="${pageContext.request.contextPath}/products" class="continue-link">Continue Browsing</a>
                     </div>
                 </c:otherwise>
             </c:choose>
         </div>
 
-        <!-- Sidebar Summary -->
-        <div class="cart-sidebar">
-            <div class="summary-box">
-                <h2 class="summary-heading">Summary</h2>
-                
-                <div class="summary-line">
+        <c:if test="${not empty sessionScope.cart}">
+            <div class="cart-summary">
+                <h2 class="summary-title">Summary</h2>
+                <div class="summary-row">
                     <span>Subtotal</span>
-                    <span>$ <fmt:formatNumber value="${cartSubtotal}" pattern="#,##0.00" /></span>
+                    <span>$<fmt:formatNumber value="${cartSubtotal}" pattern="#,##0.00" /></span>
                 </div>
-                
-                <div class="summary-line">
+                <div class="summary-row">
                     <span>Shipping</span>
-                    <span>Calculated at next step</span>
+                    <span>Calculated at checkout</span>
                 </div>
-                
-                <div class="summary-line">
-                    <span>Tax (8%)</span>
-                    <c:set var="cartTax" value="${cartSubtotal * 0.08}" />
-                    <span>$ <fmt:formatNumber value="${cartTax}" pattern="#,##0.00" /></span>
-                </div>
-                
-                <div class="summary-line total-line">
+                <div class="summary-row total">
                     <span>Total</span>
-                    <span>$ <fmt:formatNumber value="${cartSubtotal + cartTax}" pattern="#,##0.00" /></span>
+                    <span>$<fmt:formatNumber value="${cartSubtotal}" pattern="#,##0.00" /></span>
                 </div>
                 
                 <form action="${pageContext.request.contextPath}/cart/checkout" method="post">
-                    <button type="submit" class="checkout-action-btn" ${empty sessionScope.cart ? 'disabled' : ''}>
-                        SECURE CHECKOUT <i class="fa-solid fa-lock" style="font-size: 12px;"></i>
-                    </button>
+                    <button type="submit" class="checkout-btn">Secure Checkout</button>
                 </form>
-                
-                <p class="shipping-info-text">Complimentary shipping on orders over $300</p>
             </div>
-
-            <div class="brand-promise-box">
-                <div class="promise-header">THE PROMISE</div>
-                <p class="promise-desc">
-                    Every piece is hand-thrown in our coastal studio and packed in 100% plastic-free, recyclable materials.
-                </p>
-            </div>
-        </div>
+        </c:if>
     </div>
 </div>
+
+<div style="margin-bottom: 100px;"></div>
 
 <script>
     function updateQty(productId, newQty) {
@@ -402,7 +314,7 @@
     }
 
     function removeItem(productId) {
-        if (confirm('Remove this item from your collection?')) {
+        if (confirm('Remove this piece from your collection?')) {
             const params = new URLSearchParams();
             params.append('productId', productId);
 

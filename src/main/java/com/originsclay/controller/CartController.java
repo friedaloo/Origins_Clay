@@ -159,7 +159,7 @@ public class CartController extends HttpServlet {
 
         if (cart.isEmpty()) {
             request.setAttribute("error", "Your cart is empty.");
-            request.getRequestDispatcher("/WEB-INF/views/account/cart.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/pages/cart.jsp")
                    .forward(request, response);
             return;
         }
@@ -179,7 +179,7 @@ public class CartController extends HttpServlet {
                    .forward(request, response);
         } else {
             request.setAttribute("error", "Failed to place order. Please try again.");
-            request.getRequestDispatcher("/WEB-INF/views/account/cart.jsp")
+            request.getRequestDispatcher("/WEB-INF/views/pages/cart.jsp")
                    .forward(request, response);
         }
     }
