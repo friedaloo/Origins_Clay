@@ -6,188 +6,303 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Origins Clay</title>
-    <style>
-        :root {
-            --bg-color: #fcfaf0;
-            --text-dark: #1a1a1a;
-            --text-muted: #666666;
-            --olive-green: #556b3f;
-            --border-color: #e0ddd9;
-            --font-serif: 'Cormorant Garamond', serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-        }
-
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 40px;
-            padding-bottom: 150px; /* Space for fixed footer */
-        }
-
-        .about-hero {
-            display: flex;
-            gap: 80px;
-            align-items: center;
-            margin-bottom: 120px;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-text h1 {
-            font-family: var(--font-serif);
-            font-size: 56px;
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
-
-        .about-text p {
-            font-size: 18px;
-            line-height: 1.8;
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .about-img {
-            flex: 1;
-        }
-
-        .about-img img {
-            width: 100%;
-            aspect-ratio: 4/5;
-            object-fit: cover;
-            box-shadow: 20px 20px 0 var(--border-color);
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 100px;
-        }
-
-        .value-card {
-            padding: 40px;
-            background: white;
-            border: 1px solid var(--border-color);
-        }
-
-        .value-card h3 {
-            font-family: var(--font-serif);
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .value-card p {
-            font-size: 15px;
-            line-height: 1.6;
-            color: var(--text-muted);
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            background: var(--text-dark);
-            color: white;
-            padding: 80px 40px;
-            margin-top: 120px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: var(--font-serif);
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-
-        @media (max-width: 992px) {
-            .about-hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-            .stats-bar {
-                flex-wrap: wrap;
-                gap: 40px;
-            }
-        }
-    </style>
+    <style> 
+         * 
+         { 
+             margin:0; 
+             padding:0; 
+             box-sizing:border-box; 
+         } 
+ 
+         body 
+         { 
+             font-family: Arial, sans-serif; 
+             background:#ecebdc; 
+             color:#222; 
+         } 
+ 
+         .big-image 
+         { 
+             width:100%; 
+             height:420px; 
+             
+         } 
+         .big-image img 
+         { 
+             width:100%; 
+             height:100%; 
+             object-fit:cover; 
+         } 
+ 
+         .about-section 
+         { 
+             width:100%; 
+             padding:40px 20px 80px; 
+         } 
+ 
+         .title 
+         { 
+             text-align:center; 
+             margin-bottom:50px; 
+         } 
+ 
+         .title h1 
+         { 
+             font-size:55px; 
+             color:#4f8a4f; 
+             font-weight:normal; 
+             margin-bottom:10px; 
+         } 
+ 
+         .title p 
+         { 
+             max-width:700px; 
+             margin:auto; 
+             font-size:13px; 
+             font-weight:bold; 
+             line-height:1.5; 
+         } 
+ 
+         .team-container 
+         { 
+             width:100%; 
+             max-width:1100px; 
+             margin:auto; 
+         } 
+ 
+         .member-right 
+         { 
+             display:flex; 
+             align-items:flex-start; 
+             gap:35px; 
+             margin-bottom:70px; 
+         } 
+ 
+ 
+         .member-left 
+         { 
+             display:flex; 
+             align-items:flex-start; 
+             gap:35px; 
+             margin-bottom:70px; 
+             flex-direction:row-reverse; 
+         } 
+ 
+         .image-box 
+         { 
+             width:230px; 
+             height:250px; 
+             background:#4f8a4f; 
+             flex-shrink:0; 
+         } 
+         .image-box img 
+         { 
+             width:100%; 
+             height:100%; 
+             object-fit:cover; 
+         } 
+ 
+         .content 
+         { 
+             max-width:420px; 
+         } 
+ 
+         .content h2 
+         { 
+             font-size:36px; 
+             font-weight:normal; 
+             margin-bottom:12px; 
+         } 
+ 
+         .content p 
+         { 
+             font-size:13px; 
+             line-height:1.7; 
+             color:#555; 
+             margin-bottom:20px; 
+         } 
+ 
+         .info 
+         { 
+             font-size:13px; 
+             line-height:1.8; 
+         } 
+ 
+ 
+         @media(max-width:768px) 
+         { 
+ 
+             .big-image 
+             { 
+                 height:250px; 
+             } 
+ 
+             .title h1 
+             { 
+                 font-size:42px; 
+             } 
+ 
+             .member-left, 
+             .member-right 
+             { 
+                 flex-direction:column; 
+                 align-items:center; 
+                 text-align:center; 
+             } 
+ 
+             .content 
+             { 
+                 max-width:100%; 
+             } 
+ 
+             .image-box 
+             { 
+                 width:100%; 
+                 max-width:300px; 
+             } 
+ 
+         } 
+     </style>
 </head>
 <body>
 
 <jsp:include page="/WEB-INF/components/header.jsp" />
 
-<main class="about-container">
-    <section class="about-hero">
-        <div class="about-text">
-            <h1>Our Story</h1>
-            <p>
-                Origins Clay was born from a deep love for the ancient art of pottery. Founded in the heart of our coastal studio, we bring together traditional techniques passed down through generations with contemporary design sensibilities.
-            </p>
-            <p>
-                Every piece that leaves our studio is shaped by hand on the potter's wheel, carefully glazed, and fired in our kiln. We believe that everyday objects should be beautiful, functional, and tell a story.
-            </p>
-        </div>
-        <div class="about-img">
-            <img src="${pageContext.request.contextPath}/assets/images/Picture6.jpg" alt="Pottery Studio" onerror="this.src='https://placehold.co/800x1000?text=Our+Story'">
-        </div>
-    </section>
-
-    <section class="values-grid">
-        <div class="value-card">
-            <h3>Quality First</h3>
-            <p>We never compromise on materials or process. Each piece undergoes careful inspection before it reaches you.</p>
-        </div>
-        <div class="value-card">
-            <h3>Sustainability</h3>
-            <p>We source our clay locally and use non-toxic, food-safe glazes. Our packaging is made from recycled materials.</p>
-        </div>
-        <div class="value-card">
-            <h3>Community</h3>
-            <p>We work closely with local artisans, providing fair wages and supporting traditional craft communities.</p>
-        </div>
-    </section>
-
-    <section class="stats-bar">
-        <div class="stat-item">
-            <div class="stat-number">500+</div>
-            <div class="stat-label">Pieces Crafted</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">12</div>
-            <div class="stat-label">Artisans</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">5</div>
-            <div class="stat-label">Years Running</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Handmade</div>
-        </div>
-    </section>
-</main>
+     <div class="big-image"> 
+         <img src="${pageContext.request.contextPath}/assets/images/Group.png" alt="Picture of all group members" onerror="this.src='https://placehold.co/1200x420?text=Origins+Clay+Team'"> 
+     </div> 
+ 
+     <section class="about-section"> 
+ 
+         <div class="title"> 
+             <h1>About Us</h1> 
+ 
+             <p> 
+                 From concept to deployment, our team creates interactive and relevant digital 
+                 experiences that empower brands to exist beyond the confines of the classroom. 
+             </p> 
+         </div> 
+ 
+         <div class="team-container"> 
+             <div class="member-left"> 
+ 
+                 <div class="image-box"> 
+                     <img src="${pageContext.request.contextPath}/assets/images/Yathechya.png" alt="Group leader and backend developer"> 
+                 </div> 
+ 
+                 <div class="content"> 
+                     <h2>Team Lead and backend</h2> 
+ 
+                     <p> 
+                         The structural backbone of design thing, ensuring every process is 
+                         seamless and every line of code serves a higher purpose in the digital 
+                         ecosystem. 
+                     </p> 
+ 
+                     <div class="info"> 
+                         <strong>Name:</strong> Yathechya Shrestha <br> 
+                         <strong>LMU ID:</strong> 24046938 <br> 
+                         <strong>College ID:</strong> Np01cp4a240061 
+                     </div> 
+                 </div> 
+ 
+             </div> 
+             <div class="member-right"> 
+ 
+                 <div class="image-box"> 
+                     <img src="${pageContext.request.contextPath}/assets/images/Unisha.png" alt="Group member and documenter"> 
+                 </div> 
+ 
+                 <div class="content"> 
+                     <h2>Documenter</h2> 
+ 
+                     <p> 
+                         Bringing a unique classroom experience to life, ensuring every part 
+                         of our brand remains vibrant and inspiring across all platforms while 
+                         also doing the same in the report. 
+                     </p> 
+ 
+                     <div class="info"> 
+                         <strong>Name:</strong> Unisha Bhattarai <br> 
+                         <strong>LMU ID:</strong> 24046935 <br> 
+                         <strong>College ID:</strong> Np01cp4a240288 
+                     </div> 
+                 </div> 
+ 
+             </div> 
+             <div class="member-left"> 
+ 
+                 <div class="image-box"> 
+                     <img src="${pageContext.request.contextPath}/assets/images/Ishan.png" alt="UI/UX designer"> 
+                 </div> 
+ 
+                 <div class="content"> 
+                     <h2>UI/UX designer</h2> 
+ 
+                     <p> 
+                         Passionate about making a difference through user-centric design that 
+                         creates an intuitive and lasting digital experience. 
+                     </p> 
+ 
+                     <div class="info"> 
+                         <strong>Name:</strong> Ishan Muni Bajracharya <br> 
+                         <strong>LMU ID:</strong> 24046763 <br> 
+                         <strong>College ID:</strong> Np01cp4a240210 
+                     </div> 
+                 </div> 
+ 
+             </div> 
+             <div class="member-right"> 
+ 
+                 <div class="image-box"> 
+                     <img src="${pageContext.request.contextPath}/assets/images/Prakash.png" alt="Front-end developer"> 
+                 </div> 
+ 
+                 <div class="content"> 
+                     <h2>Front-end</h2> 
+ 
+                     <p> 
+                         Crafting the interface with precision and flair. Pushes creative 
+                         energy into every visually captivating detail. 
+                     </p> 
+ 
+                     <div class="info"> 
+                         <strong>Name:</strong> Prakash Bista <br> 
+                         <strong>LMU ID:</strong> 24046948 <br> 
+                         <strong>College ID:</strong> np01cp4a240019 
+                     </div> 
+                 </div> 
+ 
+             </div> 
+ 
+             <div class="member-left"> 
+ 
+                 <div class="image-box"> 
+                     <img src="${pageContext.request.contextPath}/assets/images/Saurab.png" alt="Back-end developer"> 
+                 </div> 
+ 
+                 <div class="content"> 
+                     <h2>Back-end & Database</h2> 
+ 
+                     <p> 
+                         Monitoring the data structures that keep the project robust. Ensures 
+                         the tools behind the scenes operate with innovation. 
+                     </p> 
+ 
+                     <div class="info"> 
+                         <strong>Name:</strong> Saurab Shakya <br> 
+                         <strong>LMU ID:</strong> 24046880 <br> 
+                         <strong>College ID:</strong> Np01cp4a240146 
+                     </div> 
+                 </div> 
+ 
+             </div> 
+ 
+         </div> 
+ 
+     </section> 
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />
 
-</body>
-</html>
+ </body> 
+ </html> 

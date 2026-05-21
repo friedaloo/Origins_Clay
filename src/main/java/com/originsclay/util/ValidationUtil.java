@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 /**
  * ValidationUtil - Common input validation helpers.
- * Satisfies rubric "Other Req 1 - Validation checks".
+ *Validation checks".
  */
 public class ValidationUtil {
 
