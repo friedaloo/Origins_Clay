@@ -14,7 +14,6 @@
             color: #222;
             margin: 0;
             padding: 0;
-            padding-bottom: 80px; /* Space for fixed footer */
         }
 
         .container 
@@ -71,19 +70,26 @@
         {
             width: 95%;
             aspect-ratio: 8.7/10;
-            background: #ddd;
-            border: 2px solid #aaa;
         }
-
+        .big-image img 
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .small-image 
         {
             width: 25%;
             aspect-ratio: 1/1;
-            background: #ddd;
-            border: 2px solid #aaa;
             position: absolute;
             top: -60px;
             right: -20px;
+        }
+        .small-image img 
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .middle-section 
         {
@@ -100,89 +106,156 @@
         {
             width: 100%;
             max-width: 630px;
-            aspect-ratio: 11/10;
+            aspect-ratio: 15/10;
             background: #ddd;
             border: 2px solid #aaa;
+        }
+        #right-image img 
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .three-image 
         {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between;            
         }
         #left-image 
         {
-            max-width: 420px;
+            max-width: 384px;
             width: 100%;
+            gap: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        #top-image
+        #top-image 
         {
-            max-width: 420px;
+            max-width: 384px;
             width: 100%;
-            aspect-ratio: 31/19;
+            aspect-ratio: 192/185;
             background: #ddd;
             border: 2px solid #aaa;
+        }
+        #top-image img 
+        {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         #bottom-image 
         {
-            max-width: 420px;
+            max-width: 384px;
             width: 100%;
-            aspect-ratio: 31/19;
+            aspect-ratio: 192/185;
             background: #ddd;
             border: 2px solid #aaa;
         }
-        @media (max-width: 768px)
+        #bottom-image img 
         {
-            .outer-section
-            {
-                flex-direction: column;
-                gap: 40px;
-            }
-            .overlapping-images
-            {
-                margin-top: 30px;
-            }
-            .middle-section
-            {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-
-            .three-image
-            {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-
-            #right-image
-            {
-                flex: 2;
-                width: 100%;
-            }
-
-            #left-image
-            {
-                flex: 1;
-                width: 100%;
-            }
-            #top-image
-            {
-                aspect-ratio: 31/25;
-            }
-            #bottom-image
-            {
-                aspect-ratio: 31/25;
-            }
-            .small-image
-            {
-                top: -40px;
-                right: -5px;
-                width: 30%;
-            }
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+        @media (max-width: 768px) 
+        { 
+            .outer-section 
+            { 
+                flex-direction: column; 
+                gap: 40px; 
+            } 
+            .overlapping-images 
+            { 
+                margin-top: 30px; 
+            } 
+            .middle-section 
+            { 
+                flex-direction: row; 
+                justify-content: space-between; 
+            } 
 
+            .three-image 
+            { 
+                flex-wrap: wrap; 
+                gap: 20px; 
+            } 
+
+            #right-image 
+            { 
+                flex: 2; 
+                width: 100%; 
+            } 
+
+            #left-image 
+            { 
+                flex: 1; 
+                width: 100%; 
+            } 
+            #top-image 
+            { 
+                aspect-ratio: 192/185; 
+            } 
+            #bottom-image 
+            { 
+                aspect-ratio: 192/185; 
+            } 
+            .small-image 
+            { 
+                top: -40px; 
+                right: -5px; 
+                width: 30%; 
+            } 
+        } 
+        @media (max-width: 480px) 
+        { 
+            .outer-section 
+            { 
+                flex-direction: column; 
+                gap: 40px; 
+            } 
+            .overlapping-images 
+            { 
+                margin-top: 30px; 
+            } 
+            .middle-section 
+            { 
+                flex-direction: row; 
+                justify-content: space-between; 
+            } 
+
+            .three-image 
+            { 
+                flex-wrap: wrap; 
+                gap: 20px; 
+            } 
+
+            #right-image 
+            { 
+                flex: 2; 
+                width: 100%; 
+            } 
+
+            #left-image 
+            { 
+                flex: 1; 
+                width: 100%; 
+            } 
+            #top-image 
+            { 
+                aspect-ratio: 192/185; 
+            } 
+            #bottom-image 
+            { 
+                aspect-ratio: 192/185; 
+            } 
+            .small-image 
+            { 
+                top: -40px; 
+                right: -5px; 
+                width: 30%; 
+            } 
+        } 
     </style>
 </head>
 
@@ -205,8 +278,12 @@
             </div>
 
         <div class="overlapping-images">
-            <div class="big-image"></div>
-            <div class="small-image"></div>
+            <div class="big-image">
+                <img src="${pageContext.request.contextPath}/assets/images/Obsidian Tea Set.png" alt="Obsidian tea set picture">
+            </div>
+            <div class="small-image">
+                <img src="${pageContext.request.contextPath}/assets/images/AB98C2~1.PNG" alt="picture of a hand making bowl">
+            </div>
         </div>
     </section>
     <p>CURRENT SITUATION</p>
@@ -220,10 +297,15 @@
     </section>
     <section class="three-image">
         <div id="right-image">
+            <img src="${pageContext.request.contextPath}/assets/images/lsakflkjklgjakljgk.jpg" alt="picture of a plate">
         </div>
         <div id="left-image">
-            <div id="top-image"></div>
-            <div id="bottom-image"></div>
+            <div id="top-image">
+                <img src="${pageContext.request.contextPath}/assets/images/AB6AXU~2.PNG" alt="picture of pot">
+            </div>
+            <div id="bottom-image">
+                <img src="${pageContext.request.contextPath}/assets/images/Container.png" alt="picture of three cups">
+            </div>
         </div>
     </section>
     
