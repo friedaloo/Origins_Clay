@@ -30,6 +30,11 @@
                 </div>
 
                 <div class="field">
+                    <label for="sku">SKU (Unique)</label>
+                    <input type="text" id="sku" name="sku" value="${product.sku}" placeholder="e.g. VASE-001" required>
+                </div>
+
+                <div class="field">
                     <label for="description">Description</label>
                     <textarea id="description" name="description" placeholder="Describe the product...">${product.description}</textarea>
                 </div>
@@ -60,14 +65,15 @@
                     <input type="text" id="imageUrl" name="imageUrl" value="${product.imageUrl}" placeholder="images/products/item.jpg">
                 </div>
 
-                <div style="margin-bottom: 1.2rem;">
-                    <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.75rem; color: var(--clay-brown);">
-                        <input type="checkbox" name="featured" ${product.featured ? 'checked' : ''} style="width: 16px; height: 16px;">
-                        Mark as Featured Product
-                    </label>
+                <div class="field">
+                    <label for="status">Product Status</label>
+                    <select id="status" name="status" required>
+                        <option value="Active" ${product.status == 'Active' ? 'selected' : ''}>Active</option>
+                        <option value="Draft" ${product.status == 'Draft' ? 'selected' : ''}>Draft</option>
+                    </select>
                 </div>
 
-                <div style="display: flex; gap: 0.8rem;">
+                <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem;">
                     <button type="submit" class="btn btn-primary">${formAction == 'edit' ? 'Update Product' : 'Add Product'}</button>
                     <a href="${pageContext.request.contextPath}/admin/products" class="btn btn-secondary">Cancel</a>
                 </div>

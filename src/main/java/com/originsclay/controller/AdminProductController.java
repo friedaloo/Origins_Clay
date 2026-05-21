@@ -121,12 +121,13 @@ public class AdminProductController extends HttpServlet {
     private Product extractProduct(HttpServletRequest request) {
         Product p = new Product();
         p.setName(request.getParameter("name"));
+        p.setSku(request.getParameter("sku"));
         p.setDescription(request.getParameter("description"));
         p.setPrice(new BigDecimal(request.getParameter("price")));
         p.setStockQuantity(Integer.parseInt(request.getParameter("stockQuantity")));
         p.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
         p.setImageUrl(request.getParameter("imageUrl"));
-        p.setFeatured("on".equals(request.getParameter("featured")));
+        p.setStatus(request.getParameter("status") != null ? request.getParameter("status") : "Active");
         return p;
     }
 }

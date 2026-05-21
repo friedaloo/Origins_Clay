@@ -15,7 +15,7 @@ public class CategoryDAO {
     // ---------- CREATE ----------
 
     public boolean insertCategory(Category category) {
-        String sql = "INSERT INTO categories (name, description) VALUES (?, ?)";
+        String sql = "INSERT INTO categories (category_name, description) VALUES (?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -32,7 +32,7 @@ public class CategoryDAO {
     // ---------- READ ----------
 
     public Category findById(int id) {
-        String sql = "SELECT * FROM categories WHERE id = ?";
+        String sql = "SELECT * FROM categories WHERE category_id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -48,14 +48,14 @@ public class CategoryDAO {
 
     public List<Category> findAll() {
         List<Category> categories = new ArrayList<>();
-        String sql = "SELECT * FROM categories ORDER BY name";
+        String sql = "SELECT * FROM categories ORDER BY category_name";
         try (Connection conn = DBUtil.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) categories.add(mapRow(rs));
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error fetching all categories: " + e.getMessage(), e);
         }
         return categories;
     }
@@ -63,7 +63,7 @@ public class CategoryDAO {
     // ---------- UPDATE ----------
 
     public boolean updateCategory(Category category) {
-        String sql = "UPDATE categories SET name = ?, description = ? WHERE id = ?";
+        String sql = "UPDATE categories SET category_name = ?, description = ? WHERE category_id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -81,7 +81,7 @@ public class CategoryDAO {
     // ---------- DELETE ----------
 
     public boolean deleteCategory(int id) {
-        String sql = "DELETE FROM categories WHERE id = ?";
+        String sql = "DELETE FROM categories WHERE category_id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -98,8 +98,8 @@ public class CategoryDAO {
 
     private Category mapRow(ResultSet rs) throws SQLException {
         Category c = new Category();
-        c.setId(rs.getInt("id"));
-        c.setName(rs.getString("name"));
+        c.setId(rs.getInt("category_id"));
+        c.setName(rs.getString("category_name"));
         c.setDescription(rs.getString("description"));
         return c;
     }

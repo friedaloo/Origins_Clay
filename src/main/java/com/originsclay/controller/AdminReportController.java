@@ -66,17 +66,17 @@ public class AdminReportController extends HttpServlet {
 
         try (PrintWriter writer = response.getWriter()) {
             // Header
-            writer.println("Product ID,Name,Category,Price,Stock,Featured");
+            writer.println("Product ID,Name,Category,Price,Stock,Status");
 
             // Data
             for (Product p : products) {
-                writer.printf("%d,%s,%s,%.2f,%d,%b%n",
+                writer.printf("%d,%s,%s,%.2f,%d,%s%n",
                         p.getId(),
                         p.getName(),
                         p.getCategoryName(),
                         p.getPrice(),
                         p.getStockQuantity(),
-                        p.isFeatured());
+                        p.getStatus());
             }
         }
     }

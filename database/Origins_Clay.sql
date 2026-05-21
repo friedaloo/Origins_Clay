@@ -103,3 +103,25 @@ CREATE TABLE contact_queries (
     subject      VARCHAR(255),
     message      TEXT NOT NULL
 );
+
+-- ---------------------------------------------------------------------------
+-- 7. SEED DATA
+-- ---------------------------------------------------------------------------
+
+-- Insert Categories
+INSERT INTO categories (category_name, description) VALUES 
+('Functional', 'Handcrafted pottery for everyday use'),
+('Sculptural', 'Artistic pieces for display and decor'),
+('Process', 'Items showcasing the pottery making process');
+
+-- Insert Products
+INSERT INTO products (category_id, name, sku, description, price, stock_quantity, image_url, status) VALUES
+(2, 'ASHEN FADE', 'AF-001', 'A beautiful ashen fade vase.', 120.00, 10, 'assets/images/Ashen_Fade.png', 'Active'),
+(1, 'MEDOWS VASE', 'MV-001', 'A green meadows vase.', 85.00, 5, 'assets/images/Speckled Stoneware Vase.png', 'Active'),
+(2, 'POSIDENS GOLD', 'PG-001', 'A gold-accented sculptural piece.', 250.00, 2, 'assets/images/Posidens_Gold.jpg', 'Active'),
+(2, 'BOW OF CINDERS', 'BC-001', 'A dark, textured bowl.', 95.00, 8, 'assets/images/Bow_of_cinders.jpg', 'Active'),
+(2, 'SET OF THE VALLEY', 'SV-001', 'A collection of sculptural plates.', 180.00, 3, 'assets/images/Set_of_the_valley.png', 'Active'),
+(3, 'MEDOWS COLLECTION', 'MC-001', 'The making of the meadows collection.', 0.00, 1, 'assets/images/Meadows_Collection.jpg', 'Active'),
+(2, 'SUNLIGHT DEW COLLECTION', 'SDC-001', 'A set of bright, dew-inspired pieces.', 210.00, 4, 'assets/images/Sunlights_dew_collection.png', 'Active'),
+(1, 'SERENITY TEA COLLECTION', 'STC-001', 'A peaceful tea set.', 150.00, 6, 'assets/images/SerenityTea_Set.png', 'Active'),
+(1, 'VESSEL OF PHANTOMS', 'VP-001', 'A hauntingly beautiful vessel.', 110.00, 7, 'assets/images/Vessel_of_Phantoms.jpg', 'Active');

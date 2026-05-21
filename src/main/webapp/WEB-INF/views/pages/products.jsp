@@ -5,73 +5,184 @@
     <jsp:param name="pageTitle" value="Shop" />
 </jsp:include>
 
-<h1 class="page-title"><em>Our</em> <strong>Collection</strong></h1>
-<p class="page-subtitle">Browse handcrafted pottery for every occasion</p>
+<style>
+    body {
+        background-color: #FDFCEB;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
 
-<!-- ====== SEARCH & FILTER BAR ====== -->
-<div class="card" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; padding: 1.2rem 1.5rem;">
-    <form action="${pageContext.request.contextPath}/products" method="get" style="display: flex; flex-wrap: wrap; gap: 1rem; flex: 1; align-items: flex-end;">
-        <div class="field" style="margin-bottom: 0; flex: 1; min-width: 200px;">
-            <label for="search">Search</label>
-            <input type="text" id="search" name="search" placeholder="Search pottery..." value="${searchKeyword}">
-        </div>
-        <div class="field" style="margin-bottom: 0; min-width: 160px;">
-            <label for="category">Category</label>
-            <select id="category" name="category">
-                <option value="">All Categories</option>
-                <c:forEach var="cat" items="${categories}">
-                    <option value="${cat.id}" ${selectedCategory == cat.id ? 'selected' : ''}>${cat.name}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-    </form>
-</div>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
 
-<!-- ====== PRODUCT GRID ====== -->
-<div class="grid-3" style="margin-top: 1.5rem;">
-    <c:forEach var="product" items="${products}">
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/${product.imageUrl}" 
-                 alt="${product.name}"
-                 onerror="this.style.background='#E5E2E0'; this.src='';">
-            <div class="info">
-                <span class="category-label">${product.categoryName}</span>
-                <h3>${product.name}</h3>
-                <p style="font-size: 0.78rem; color: var(--clay-muted); margin: 0.3rem 0; line-height: 1.5;">
-                    ${product.description}
-                </p>
-                <div class="price">$${product.price}</div>
-                <c:choose>
-                    <c:when test="${product.stockQuantity > 0}">
-                        <span style="font-size: 0.6rem; color: var(--clay-success);">IN STOCK (${product.stockQuantity})</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span style="font-size: 0.6rem; color: var(--clay-danger);">OUT OF STOCK</span>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="actions">
-                <a href="${pageContext.request.contextPath}/product-details?id=${product.id}" class="btn btn-secondary btn-sm">Details</a>
-                <c:if test="${product.stockQuantity > 0}">
-                    <form action="${pageContext.request.contextPath}/cart/add" method="post" style="display:inline;">
-                        <input type="hidden" name="productId" value="${product.id}">
-                        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
-                    </form>
-                </c:if>
-                <form action="${pageContext.request.contextPath}/wishlist/add" method="post" style="display:inline;">
-                    <input type="hidden" name="productId" value="${product.id}">
-                    <button type="submit" class="btn btn-secondary btn-sm" title="Add to Wishlist"><i class="fa-regular fa-heart"></i></button>
-                </form>
-            </div>
+    /* Search & Filter Bar */
+    .filter-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+        gap: 20px;
+        border-bottom: 1px solid #333;
+        padding-bottom: 20px;
+    }
+
+    .search-box {
+        position: relative;
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 1px solid #E0E0E0;
+        background-color: #fff;
+        font-size: 16px;
+        color: #666;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+    }
+
+    .category-filters {
+        display: flex;
+        gap: 10px;
+    }
+
+    .filter-btn {
+        padding: 8px 20px;
+        border: 1px solid #E0E0E0;
+        background-color: #fff;
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        border-color: #333;
+        color: #333;
+    }
+
+    /* Product Grid */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .product-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-image {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        background-color: #eee;
+        margin-bottom: 15px;
+    }
+
+    .product-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    .product-name {
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .product-category {
+        font-size: 11px;
+        color: #999;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 992px) {
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+        .filter-bar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .search-box {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<div class="container">
+    <!-- ====== SEARCH & FILTER BAR ====== -->
+    <div class="filter-bar">
+        <form action="${pageContext.request.contextPath}/products" method="get" class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="search" placeholder="Find a piece..." value="${searchKeyword}">
+            <c:if test="${not empty selectedCategory}">
+                <input type="hidden" name="category" value="${selectedCategory}">
+            </c:if>
+        </form>
+
+        <div class="category-filters">
+            <a href="${pageContext.request.contextPath}/products" 
+               class="filter-btn ${empty selectedCategory ? 'active' : ''}">All Works</a>
+            <c:forEach var="cat" items="${categories}">
+                <a href="${pageContext.request.contextPath}/products?category=${cat.id}" 
+                   class="filter-btn ${selectedCategory == cat.id ? 'active' : ''}">${cat.name}</a>
+            </c:forEach>
         </div>
-    </c:forEach>
+    </div>
+
+    <!-- ====== PRODUCT GRID ====== -->
+    <div class="product-grid">
+        <c:forEach var="product" items="${products}">
+            <div class="product-card">
+                <a href="${pageContext.request.contextPath}/product-details?id=${product.id}">
+                    <img src="${pageContext.request.contextPath}/${product.imageUrl}" 
+                         alt="${product.name}" 
+                         class="product-image"
+                         onerror="this.style.display='none';">
+                </a>
+                <div class="product-info">
+                    <a href="${pageContext.request.contextPath}/product-details?id=${product.id}" class="product-name">${product.name}</a>
+                    <p class="product-category">${product.categoryName}</p>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 
     <c:if test="${empty products}">
-        <p style="grid-column: 1/-1; text-align: center; color: var(--clay-muted); padding: 3rem;">
-            No products found. Try a different search or category.
+        <p style="text-align: center; color: #999; padding: 60px 0; grid-column: 1/-1;">
+            No pieces found matching your criteria.
         </p>
     </c:if>
 </div>
+
+<div style="margin-bottom: 80px;"></div> <!-- Spacer for fixed footer -->
 
 <jsp:include page="/WEB-INF/components/footer.jsp" />

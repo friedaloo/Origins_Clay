@@ -10,13 +10,14 @@ public class Product {
 
     private int id;
     private String name;
+    private String sku;
     private String description;
     private BigDecimal price;
     private int stockQuantity;
     private int categoryId;
     private String categoryName;   // transient / joined field
     private String imageUrl;
-    private boolean featured;
+    private String status;         // Active or Draft
     private Timestamp createdAt;
 
     public Product() {}
@@ -28,6 +29,9 @@ public class Product {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
@@ -47,8 +51,8 @@ public class Product {
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public boolean isFeatured() { return featured; }
-    public void setFeatured(boolean featured) { this.featured = featured; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }

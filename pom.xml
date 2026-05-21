@@ -53,11 +53,12 @@
       <version>3.0.1</version>
     </dependency>
 
-    <!-- MySQL / MariaDB Connector -->
+    <!-- MySQL Connector (CRITICAL: scope=compile so it packages into WAR) -->
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
       <version>9.1.0</version>
+      <scope>compile</scope>
     </dependency>
 
     <!-- jBCrypt for password hashing -->
@@ -65,17 +66,29 @@
       <groupId>org.mindrot</groupId>
       <artifactId>jbcrypt</artifactId>
       <version>0.4</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
   <build>
     <finalName>Origins_Clay</finalName>
     <plugins>
+      <!-- WAR Plugin: explicitly package dependencies into WEB-INF/lib -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
+
+      <!-- Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -84,6 +97,26 @@
           <source>21</source>
           <target>21</target>
         </configuration>
+      </plugin>
+
+      <!-- Dependency Plugin: copy dependencies to target/lib for verification -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <includeScope>compile</includeScope>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
