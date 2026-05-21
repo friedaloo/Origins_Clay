@@ -72,5 +72,3 @@
 
 </body>
 </html>
-
-<jsp:include page="/WEB-INF/components/footer.jsp" />

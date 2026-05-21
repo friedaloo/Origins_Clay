@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<jsp:include page="/WEB-INF/components/header.jsp">
-    <jsp:param name="pageTitle" value="${formAction == 'edit' ? 'Edit Product' : 'Add Product'}" />
-</jsp:include>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,5 +77,3 @@
 
 </body>
 </html>
-
-<jsp:include page="/WEB-INF/components/footer.jsp" />
